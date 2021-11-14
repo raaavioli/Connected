@@ -3,15 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(WirePhysics))]
 public class WireRenderer : MonoBehaviour {
+    // --- Public properties ---
+
+    public Vector3[] points { get; set; } = new Vector3[0];
+
     // --- Serialized fields ---
 
-    // Positions.
-    [SerializeField]
-    private Vector3[] points;
     [SerializeField]
     [Range(3, 20)]
     private int radialResolution = 8;
@@ -39,14 +40,15 @@ public class WireRenderer : MonoBehaviour {
         // Initialize mesh.
         meshFilter = GetComponent<MeshFilter>();
         mesh = new Mesh();
-
-        // Initialize the wire.
-        UpdateWire();
 	}
     
     private void Update() {
         UpdateWire();
     }
+
+    public float GetRadius() {
+        return radius;
+	}
 
     // Performs all the actions required for updating the wire.
     private void UpdateWire() {
@@ -62,7 +64,7 @@ public class WireRenderer : MonoBehaviour {
     }
 
 	private void OnDrawGizmosSelected() {
-        if (!drawGizmos) {
+        if (!drawGizmos || vertices == null) {
             return;
 		}
 
@@ -136,7 +138,7 @@ public class WireRenderer : MonoBehaviour {
     // Calculates tangent vectors along the wire's curve at each point. The last tangent is equal to the next to last tangent.
     private void UpdateTangents() {
         tangents = new Vector3[points.Length];
-        float[] lengths = new float[points.Length - 1];
+        float[] lengths = new float[Mathf.Clamp(points.Length - 1, 0, int.MaxValue)];
         float fullLength = 0.0f;
 
         // Each tangent is the normalized direction vector from the current point to the next.
