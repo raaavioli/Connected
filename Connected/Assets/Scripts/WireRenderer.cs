@@ -30,28 +30,34 @@ public class WireRenderer : MonoBehaviour {
     private Mesh mesh;
     private Vector3[] vertices;
     private int[] triangles;
+    private Vector2[] uv;
 
     // Other fields.
     private Vector3[] tangents;
 
 	private void Awake() {
+        // Initialize mesh.
         meshFilter = GetComponent<MeshFilter>();
         mesh = new Mesh();
 
+        // Initialize the wire.
         UpdateWire();
 	}
     
     private void Update() {
         UpdateWire();
-        OnDrawGizmosSelected();
     }
 
+    // Performs all the actions required for updating the wire.
     private void UpdateWire() {
+        // Pre-requisites for the mesh update.
         UpdateTangents();
 
+        // Update the data of the mesh.
         GenerateVertices();
         GenerateTriangles();
 
+        // Update the visuals of the mesh.
         UpdateMesh();
     }
 
@@ -60,48 +66,66 @@ public class WireRenderer : MonoBehaviour {
             return;
 		}
 
+        // Draw cubes for the points along the line.
         foreach (Vector3 point in points) {
-            Gizmos.DrawCube(point, Vector3.one * 0.2f);
+            Gizmos.DrawCube(transform.TransformPoint(point), Vector3.one * 0.2f);
 		}
 
-        float redStep = 1.0f / radialResolution;
+        // Draw cyan spheres for the vertices.
         for (int i = 0; i < vertices.Length; ++i) {
-            Gizmos.color = new Color(i % 8 * redStep, 0.0f, 0.0f);
-            Gizmos.DrawSphere(vertices[i], 0.1f);
+            Gizmos.color = Color.cyan + Color.white * 0.7f;
+            Gizmos.DrawSphere(transform.TransformPoint(vertices[i]), 0.1f);
         }
     }
 
+    // Generates the vertices of the mesh and populates the vertex array.
 	private void GenerateVertices() {
+        // Initialize vertex array and calculate angle between vertices.
         vertices = new Vector3[points.Length * radialResolution];
         float rotationAngle = 360.0f / radialResolution;
 
+        // For aach point along the wire, place a number of vertices as the corners of a polygon around the point.
         for (int i = 0; i < points.Length; ++i) {
-            Vector3 point = points[i];
+            // Calculate the axis around which the vertices will be placed.
             Vector3 averagedTangent = Vector3.zero;
             if (i > 0 && i < points.Length - 1) {
+                // If the point is not an end point, let the axis be the normalized sum of the previous point's tangent and the own tangent.
                 averagedTangent = Vector3.Normalize(tangents[Mathf.Clamp(i - 1, 0, tangents.Length - 1)] + tangents[Mathf.Clamp(i, 0, tangents.Length - 1)]);
             } else {
+                // If the point is an endpoint, use its precalculated tangent.
                 averagedTangent = tangents[i];
             }
-            Vector3 orthogonalOffset = Vector3.Cross(averagedTangent, ParallellVectors(averagedTangent, Vector3.one) ? Vector3.up : Vector3.one).normalized * radius;
+            // Find the vector with which to offset the vertices from the point.
+            // The vector is found using the cross product between the tangent and an arbitrary, non-parallel vector, for the direction and the radius for the magnitude.
+            Vector3 orthogonalOffset = Vector3.Cross(averagedTangent, ParallelVectors(averagedTangent, Vector3.one) ? Vector3.up : Vector3.one).normalized * radius;
             for (int j = 0; j < radialResolution; ++j) {
-                vertices[i * radialResolution + j] = point + Quaternion.AngleAxis(rotationAngle * j, averagedTangent) * orthogonalOffset;
+                // For each vertex, rotate the offset around the tangent and place the vertex at the sum of the point and the offset.
+                vertices[i * radialResolution + j] = points[i] + Quaternion.AngleAxis(rotationAngle * j, averagedTangent) * orthogonalOffset;
 			}
 		}
 	}
 
+    // Populates the triangle array appropriately.
     private void GenerateTriangles() {
-        triangles = new int[3 * 2 * (points.Length -1 ) * radialResolution];
+        // The number of triangles is twice the number of vertices for all except the final set of vertices.
+        // This is because each vertex except in the final set of vertices is associated with a single quad.
+        triangles = new int[3 * 2 * (points.Length - 1) * radialResolution];
         int triangleIndex = 0;
 
+        // For each point along the wire, go through each of the vertices around the point.
         for (int i = 0; i < points.Length - 1; ++i) {
+            // For each vertex in the ring, create the two triangles of the associated quad.
             for (int j = 0; j < radialResolution; ++j) {
+                // Calculate the special term that is able to handle the last vertex in the ring.
+                // If the current vertex is the last vertex, we need to access the first vertex again, so the index offset is 0.
                 int loopingIndex = j == radialResolution - 1 ? 0 : j + 1;
                 
+                // The first quad.
                 triangles[triangleIndex++] = i * radialResolution + j;
                 triangles[triangleIndex++] = i * radialResolution + loopingIndex;
                 triangles[triangleIndex++] = (i + 1) * radialResolution + loopingIndex;
 
+                // The second quad.
                 triangles[triangleIndex++] = i * radialResolution + j;
                 triangles[triangleIndex++] = (i + 1) * radialResolution + loopingIndex;
                 triangles[triangleIndex++] = (i + 1) * radialResolution + j;
@@ -112,26 +136,56 @@ public class WireRenderer : MonoBehaviour {
     // Calculates tangent vectors along the wire's curve at each point. The last tangent is equal to the next to last tangent.
     private void UpdateTangents() {
         tangents = new Vector3[points.Length];
-        
+        float[] lengths = new float[points.Length - 1];
+        float fullLength = 0.0f;
+
+        // Each tangent is the normalized direction vector from the current point to the next.
+        // The lengths of the segments and the full length of the wire are calculated.
         for (int i = 0; i < points.Length - 1; ++i) {
-            tangents[i] = Vector3.Normalize(points[i + 1] - points[i]);
+            Vector3 differenceVector = points[i + 1] - points[i];
+            float length = differenceVector.magnitude;
+            lengths[i] = length;
+            fullLength += length;
+            tangents[i] = Vector3.Normalize(differenceVector);
 		}
 
+        // The final tangent is equal to the next to last tangent.
         if (tangents.Length > 1) {
             tangents[tangents.Length - 1] = tangents[tangents.Length - 2];
         }
+
+        // Calculate the uv coordinates based on how far along the wire it has gone.
+        // The u coordinate increases linearly along the wire.
+        uv = new Vector2[points.Length * radialResolution];
+        float accumulatedRelativeLength = 0.0f;
+
+        SetUvForRing(0, uv, 0.0f, 0.0f);
+
+        for (int i = 0; i < lengths.Length; ++i) {
+            accumulatedRelativeLength += Mathf.Clamp(lengths[i] / fullLength, 0.0f, 1.0f);
+            SetUvForRing(i + 1, uv, accumulatedRelativeLength, 0.0f);
+		}
 	}
 
+    private void SetUvForRing(int ringIndex, Vector2[] uv, float u, float v) {
+        for (int i = 0; i < radialResolution; ++i) {
+            uv[ringIndex * radialResolution + i] = new Vector2(u, v);
+		}
+	}
+
+    // Updates the visual mesh with the current mesh data.
     private void UpdateMesh() {
         mesh.Clear();
         mesh.name = "WireMesh";
         mesh.vertices = vertices;
         mesh.triangles = triangles;
+        mesh.uv = uv;
         mesh.RecalculateNormals();
         meshFilter.mesh = mesh;
 	}
 
-    private bool ParallellVectors(Vector3 a, Vector3 b) {
+    // Returns true if the input vectors are parallel.
+    private bool ParallelVectors(Vector3 a, Vector3 b) {
         return a.normalized == b.normalized;
 	}
 }
