@@ -59,3 +59,5 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+Connected/.DS_Store
+.DS_Store
