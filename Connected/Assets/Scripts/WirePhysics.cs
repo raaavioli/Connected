@@ -116,7 +116,7 @@ public class WirePhysics : MonoBehaviour {
 		foreach (Point p in points) {
 			if (!p.locked) {
 				Vector3 positionBeforeUpdate = p.position;
-				p.position += p.position - p.prevPosition;
+				p.position += (p.position - p.prevPosition) * 0.98f;
 				p.position += Physics.gravity * Time.deltaTime * Time.deltaTime;
 				p.prevPosition = positionBeforeUpdate;
 			}

@@ -43,7 +43,9 @@ public class WireRenderer : MonoBehaviour {
 	}
     
     private void Update() {
-        UpdateWire();
+        if (points.Length > 0) {
+            UpdateWire();
+		}
     }
 
     public float GetRadius() {
