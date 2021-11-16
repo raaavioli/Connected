@@ -213,6 +213,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -3.99
       objectReference: {fileID: 0}
+    - target: {fileID: 1372956987533699974, guid: 71f4a1d08bb81a1459953763dd9c7523, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1583432573830374512, guid: c6dd9b3816c4a7e44b07d167f89e90d2, type: 3}
     - target: {fileID: 1372956987995895864, guid: 71f4a1d08bb81a1459953763dd9c7523, type: 3}
       propertyPath: m_Name
       value: Wire
@@ -261,6 +265,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1372956988780193825, guid: 71f4a1d08bb81a1459953763dd9c7523, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1583432573830374512, guid: c6dd9b3816c4a7e44b07d167f89e90d2, type: 3}
     - target: {fileID: 1372956988780193839, guid: 71f4a1d08bb81a1459953763dd9c7523, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.93
