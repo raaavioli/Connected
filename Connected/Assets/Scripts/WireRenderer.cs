@@ -10,6 +10,13 @@ public class WireRenderer : MonoBehaviour {
     // --- Public properties ---
 
     public Vector3[] points { get; set; } = new Vector3[0];
+    public bool connected {
+        set {
+            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            mpb.SetFloat("_Connected", Convert.ToSingle(value));
+            meshRenderer.SetPropertyBlock(mpb, 0);
+        }
+    }
 
     // --- Serialized fields ---
 
@@ -26,6 +33,7 @@ public class WireRenderer : MonoBehaviour {
 
     // Components.
     private MeshFilter meshFilter;
+    private MeshRenderer meshRenderer;
 
     // Mesh fields.
     private Mesh mesh;
@@ -39,6 +47,7 @@ public class WireRenderer : MonoBehaviour {
 	private void Awake() {
         // Initialize mesh.
         meshFilter = GetComponent<MeshFilter>();
+        meshRenderer = GetComponent<MeshRenderer>();
         mesh = new Mesh();
 	}
     
@@ -163,17 +172,17 @@ public class WireRenderer : MonoBehaviour {
         uv = new Vector2[points.Length * radialResolution];
         float accumulatedRelativeLength = 0.0f;
 
-        SetUvForRing(0, uv, 0.0f, 0.0f);
+        SetUvForRing(0, uv, 0.0f);
 
         for (int i = 0; i < lengths.Length; ++i) {
             accumulatedRelativeLength += Mathf.Clamp(lengths[i] / fullLength, 0.0f, 1.0f);
-            SetUvForRing(i + 1, uv, accumulatedRelativeLength, 0.0f);
+            SetUvForRing(i + 1, uv, accumulatedRelativeLength);
 		}
 	}
 
-    private void SetUvForRing(int ringIndex, Vector2[] uv, float u, float v) {
+    private void SetUvForRing(int ringIndex, Vector2[] uv, float u) {
         for (int i = 0; i < radialResolution; ++i) {
-            uv[ringIndex * radialResolution + i] = new Vector2(u, v);
+            uv[ringIndex * radialResolution + i] = new Vector2(u, (float) i / (radialResolution - 1));
 		}
 	}
 
