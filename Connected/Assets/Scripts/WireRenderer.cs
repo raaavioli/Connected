@@ -5,7 +5,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
-[RequireComponent(typeof(WirePhysics))]
 public class WireRenderer : MonoBehaviour {
     // --- Public properties ---
 
