@@ -27,13 +27,13 @@ public class ToolBoard : MonoBehaviour
             float y = -0.45f * (i / Columns);
             float x = -0.45f * (i % Columns);
             marker.transform.position += new Vector3(x, y, 0);
+            marker.transform.localScale = new Vector3(0.04f, 0.04f, 0.04f);
             GameObject toolObject = null;
             if (ToolObjectPrefabs[i])
             {
                 toolObject = Instantiate(ToolObjectPrefabs[i], marker.transform);
-                toolObject.transform.localRotation = new Quaternion(-1.0f, 0, 0, 1.0f);
-                toolObject.transform.localPosition = new Vector3(0, 0, 2f);
-                toolObject.transform.localScale *= 3;
+                toolObject.transform.position += new Vector3(0, 0, 0.10f);
+                toolObject.transform.localScale *= 1 / 0.04f;
             }   
             Tools.Add(new Tool(toolObject, marker));
         }

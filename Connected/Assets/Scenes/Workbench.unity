@@ -650,7 +650,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3743034602337401938, guid: 8ead6f9a6dd7bb34ea23d407d033ac24, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.007886144
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3743034602337401938, guid: 8ead6f9a6dd7bb34ea23d407d033ac24, type: 3}
       propertyPath: m_LocalPosition.y
@@ -752,6 +752,26 @@ PrefabInstance:
       propertyPath: Tools.Array.data[9]
       value: 
       objectReference: {fileID: 2861157229352181990, guid: 595a20880dce751478fcd44ba712096e, type: 3}
+    - target: {fileID: 8265347713256142808, guid: 8ead6f9a6dd7bb34ea23d407d033ac24, type: 3}
+      propertyPath: ToolObjectPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 3643426291929545520, guid: 2f64ff0e7a18c924d84adf5e18bbd25b, type: 3}
+    - target: {fileID: 8265347713256142808, guid: 8ead6f9a6dd7bb34ea23d407d033ac24, type: 3}
+      propertyPath: ToolObjectPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 199099517952966406, guid: 8c1ec3523d6db674cad206da21c7567f, type: 3}
+    - target: {fileID: 8265347713256142808, guid: 8ead6f9a6dd7bb34ea23d407d033ac24, type: 3}
+      propertyPath: ToolObjectPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 3643426291929545520, guid: 2f64ff0e7a18c924d84adf5e18bbd25b, type: 3}
+    - target: {fileID: 8265347713256142808, guid: 8ead6f9a6dd7bb34ea23d407d033ac24, type: 3}
+      propertyPath: ToolObjectPrefabs.Array.data[6]
+      value: 
+      objectReference: {fileID: 3643426291929545520, guid: 2f64ff0e7a18c924d84adf5e18bbd25b, type: 3}
+    - target: {fileID: 8265347713256142808, guid: 8ead6f9a6dd7bb34ea23d407d033ac24, type: 3}
+      propertyPath: ToolObjectPrefabs.Array.data[9]
+      value: 
+      objectReference: {fileID: 3643426291929545520, guid: 2f64ff0e7a18c924d84adf5e18bbd25b, type: 3}
     - target: {fileID: 8914435912034748492, guid: 8ead6f9a6dd7bb34ea23d407d033ac24, type: 3}
       propertyPath: m_LocalPosition.y
       value: 2.185
