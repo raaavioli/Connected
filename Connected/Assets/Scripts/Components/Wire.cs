@@ -14,10 +14,10 @@ public class Wire : MonoBehaviour {
 	}
 
 	private void Update() {
-		if (positive == null || negative == null) {
-			wireRenderer.connected = false;
-		} else if (positive != null && negative != null) {
+		if (positive != null && negative != null) {
 			wireRenderer.connected = true;
+		} else {
+			wireRenderer.connected = false;
 		}
 	}
 }
