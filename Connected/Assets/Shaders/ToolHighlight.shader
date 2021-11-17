@@ -6,6 +6,7 @@ Shader "Unlit/ToolHighlight"
         _BorderWidth ("Border width", Range(0, 1)) = 0.1666
         _BorderFade ("Fade", Range(0, 1)) = 0
         _CheckeredScale ("CheckeredScale", Range(1, 20)) = 10
+        _ObjectScale ("Scale", Vector) = (1.0, 1.0, 1.0, 1.0)
     }
     SubShader
     {
@@ -30,21 +31,25 @@ Shader "Unlit/ToolHighlight"
             struct FragInput
             {
                 float4 vertex : SV_POSITION;
-                float2 uv : TEXCOORD0;
-                float2 centeredUV : TEXCOORD1;
+                float2 centeredUV : TEXCOORD0;
+                float2 checkeredUV : TEXCOORD1;
             };
 
             float4 _Color;
             float _BorderWidth;
             float _BorderFade;
             float _CheckeredScale;
+            float4 _ObjectScale;
 
             FragInput vert (VertexInput v)
             {
                 FragInput o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = v.uv;
-                o.centeredUV = v.uv * 2 - 1;
+                float aspect = _ObjectScale.x / _ObjectScale.y;
+                o.centeredUV = (v.uv * 2 - 1);
+                o.checkeredUV = o.centeredUV;
+                o.checkeredUV.x *= max(aspect, 1.0);
+                o.checkeredUV.y *= max(1 / aspect, 1.0);
                 return o;
             }
 
@@ -55,7 +60,7 @@ Shader "Unlit/ToolHighlight"
             #define CARD_HEIGHT 216
             #define CARD_ASPECT (CARD_WIDTH / CARD_HEIGHT)
 
-            fixed4 frag (FragInput i) : SV_Target
+            fixed4 frag(FragInput i) : SV_Target
             {
                 float len = saturate(length(i.centeredUV));
                 float distToXEdge = 1 / 6.0;
@@ -68,8 +73,8 @@ Shader "Unlit/ToolHighlight"
                 innerBorder = 1 - innerBorder;
                 float border = min(innerBorder, outerBorder);
 
-                float xChess = smoothstep(0.5f - 0.1, 0.5f + 0.1, (sin(_CheckeredScale * TAU * i.centeredUV.x) + 1) / 2.f);
-                float yChess = smoothstep(0.5f - 0.1, 0.5f + 0.1, (sin(_CheckeredScale * TAU * i.centeredUV.y) + 1) / 2.f);
+                float xChess = smoothstep(0.5f - 0.1, 0.5f + 0.1, (sin(_CheckeredScale * TAU * i.checkeredUV.x) + 1) / 2.f);
+                float yChess = smoothstep(0.5f - 0.1, 0.5f + 0.1, (sin(_CheckeredScale * TAU * i.checkeredUV.y) + 1) / 2.f);
                 float checkeredPattern = saturate(abs(xChess - yChess));
 
                 float pattern = checkeredPattern * border;
