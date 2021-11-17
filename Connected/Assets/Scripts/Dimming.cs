@@ -4,31 +4,30 @@ using UnityEngine;
 
 public class Dimming : MonoBehaviour
 {
-    MaterialPropertyBlock FilamentMpb;
 
     [SerializeField]
     GameObject Filament;
-
     [SerializeField]
     Light LightSource;
-
     [SerializeField]
     [Range(0.0f, 20.0f)]
-    float Intensity = 1.0f;
-    float MaxIntensity = 20.0f;
+    float Intensity = 0.0f;
 
-    private Color filamentColor = new Color(0.7490196f, 0.427451f, 0);
+    Renderer FilamentRenderer;
+    MaterialPropertyBlock FilamentMpb;
+    float MaxIntensity = 20.0f;
 
     private void Start()
     {
+        FilamentRenderer = Filament.GetComponent<Renderer>();
         FilamentMpb = new MaterialPropertyBlock();
     }
 
     // Update is called once per frame
     void Update()
     {
-        FilamentMpb.SetColor("_EmissionColor", filamentColor * Intensity);
-        Filament.GetComponent<Renderer>().SetPropertyBlock(FilamentMpb);
+        FilamentMpb.SetColor("_EmissionColor", Colors.FilamentColor * Intensity);
+        FilamentRenderer.SetPropertyBlock(FilamentMpb);
         LightSource.intensity = Intensity / MaxIntensity;
     }
 }

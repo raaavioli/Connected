@@ -19,8 +19,6 @@ public class ToolBoard : MonoBehaviour
 
     void Start()
     {
-
-
         for (int i = 0; i < ToolObjectPrefabs.Length; i++)
         {
             GameObject marker = Instantiate(ToolMarkerPrefab, gameObject.transform);
@@ -52,11 +50,13 @@ public class ToolBoard : MonoBehaviour
 
 public class Tool
 {
-    private GameObject toolPrefab;
-    private GameObject marker;
+    GameObject toolPrefab;
+    GameObject marker;
 
-    MaterialPropertyBlock InactiveMPB;
-    MaterialPropertyBlock ActiveMPB;
+    Renderer markerRenderer;
+
+    MaterialPropertyBlock inactiveMPB;
+    MaterialPropertyBlock activeMPB;
 
     List<GameObject> toolInstances = new List<GameObject>();
 
@@ -65,20 +65,18 @@ public class Tool
         this.toolPrefab = toolPrefab;
         this.marker = marker;
 
-        InactiveMPB = new MaterialPropertyBlock();
-        InactiveMPB.SetColor("_Color", Colors.DarkBrown);
-        ActiveMPB = new MaterialPropertyBlock();
-        ActiveMPB.SetColor("_Color", Colors.Orange);
+        markerRenderer = marker.GetComponent<Renderer>();
+
+        inactiveMPB = new MaterialPropertyBlock();
+        inactiveMPB.SetColor("_Color", Colors.DarkBrown);
+        activeMPB = new MaterialPropertyBlock();
+        activeMPB.SetColor("_Color", Colors.Orange);
     }
 
     public void Update()
     {
-
-        if (toolPrefab != null)
-            marker.GetComponent<Renderer>().SetPropertyBlock(ActiveMPB);
-        else
-            marker.GetComponent<Renderer>().SetPropertyBlock(InactiveMPB);
-
+        MaterialPropertyBlock mpb = toolPrefab != null ? activeMPB : inactiveMPB;
+        markerRenderer.SetPropertyBlock(mpb, 0);
     }
 }
 
