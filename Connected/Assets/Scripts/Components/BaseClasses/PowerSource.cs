@@ -2,25 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class GeneralComponent : MonoBehaviour {
-    public Wire positive { get; set; }
-    public Wire negative { get; set; }
-    public float current { get; set; }
-    public float resistance { get; protected set; }
-
-    public static bool CheckConnection(Wire positive) {
-        if (positive == null) return false;
-        else return positive.positive != null;
-    }
-}
-
 public abstract class PowerSource : GeneralComponent {
     public float voltage { get; protected set; }
+
+    private void Start()
+    {
+        CircuitManager.AddPowerSource(this);
+    }
+
+    private void OnDestroy()
+    {
+        CircuitManager.RemovePowerSource(this);
+    }
 
     public List<PowerSource> CheckCircuit() // Returns other power sources that is in the circuit for the circuit manager.
     {
         GeneralComponent nextComponent = null;
         List<PowerSource> foundPowerSources = new List<PowerSource>();
+        foundPowerSources.Add(this);
+
         float resistanceSum = 0.0f;
         float voltageSum = 0.0f;
 
@@ -28,7 +28,8 @@ public abstract class PowerSource : GeneralComponent {
             nextComponent = positive.positive;
         }
 
-        while (nextComponent != this) {
+        while (nextComponent != this)
+        {
             resistanceSum += nextComponent.resistance;
 
             if (nextComponent.GetType() == typeof(PowerSource)) {
@@ -43,21 +44,23 @@ public abstract class PowerSource : GeneralComponent {
                 break;
             }
         }
-        voltageSum += this.voltage;
-        if (nextComponent == this) ResolveCircuit(resistanceSum, voltageSum);
+        voltageSum += this.voltage; resistanceSum += this.resistance;
+        if (nextComponent == this) {
+            ResolveCircuit(resistanceSum, voltageSum);
+        }
 
         return foundPowerSources;
     }
 
     private void ResolveCircuit(float resistance, float voltage) // Can safely assume closed circuit
     {
-        float current = voltage / (resistance + Mathf.Epsilon); //TODO: Explode power source or whatever, when current is near-infinite.
+        float current = voltage / (resistance + Mathf.Epsilon); //TODO: Explode powersource or whatever, when current is near-infinite.
         this.current = current;
-        GeneralComponent currentComponent = this.positive.positive;
+        GeneralComponent nextComponent = this.positive.positive;
 
-        while (currentComponent != this) {
-            currentComponent.current = current;
-            currentComponent = currentComponent.positive.positive;
+        while (nextComponent != this) {
+            nextComponent.current = current;
+            nextComponent = nextComponent.positive.positive;
         }
     }
 }
