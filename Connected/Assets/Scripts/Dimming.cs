@@ -17,7 +17,7 @@ public class Dimming : MonoBehaviour
     MaterialPropertyBlock FilamentMpb;
     float MaxIntensity = 20.0f;
 
-    private void Start()
+    private void Awake()
     {
         FilamentRenderer = Filament.GetComponent<Renderer>();
         FilamentMpb = new MaterialPropertyBlock();
