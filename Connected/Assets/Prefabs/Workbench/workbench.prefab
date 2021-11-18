@@ -468,7 +468,7 @@ GameObject:
   - component: {fileID: 314748083661435895}
   - component: {fileID: 2574584537506842429}
   m_Layer: 0
-  m_Name: workbench
+  m_Name: Workbench
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
