@@ -173,7 +173,6 @@ GameObject:
   - component: {fileID: 1960143379538105785}
   - component: {fileID: 7500110904479187241}
   - component: {fileID: 6666538039305312600}
-  - component: {fileID: 8265347713256142808}
   m_Layer: 0
   m_Name: Toolboard
   m_TagString: Untagged
@@ -244,32 +243,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8265347713256142808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2975791284117959938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09579e0e4607ab74a89990c80ef69f53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Rows: 2
-  Columns: 5
-  ToolMarkerPrefab: {fileID: 5612059452621867877, guid: 595a20880dce751478fcd44ba712096e, type: 3}
-  ToolObjectPrefabs:
-  - {fileID: 1060475092283353493, guid: b4b43c75ee8fb09448e33339334f0fc7, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 1060475092283353493, guid: b4b43c75ee8fb09448e33339334f0fc7, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 1060475092283353493, guid: b4b43c75ee8fb09448e33339334f0fc7, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 1060475092283353493, guid: b4b43c75ee8fb09448e33339334f0fc7, type: 3}
 --- !u!1 &3235223865754649666
 GameObject:
   m_ObjectHideFlags: 0
