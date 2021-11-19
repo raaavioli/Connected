@@ -16,6 +16,20 @@ public class WireRenderer : MonoBehaviour {
             meshRenderer.SetPropertyBlock(mpb, 0);
         }
     }
+    public Color startColor {
+        set {
+            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            mpb.SetColor("_StartColor", value);
+            meshRenderer.SetPropertyBlock(mpb, 0);
+        }
+    }
+    public Color endColor {
+        set {
+            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            mpb.SetColor("_EndColor", value);
+            meshRenderer.SetPropertyBlock(mpb, 0);
+        }
+    }
 
     // --- Serialized fields ---
 
