@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1372956987533699975}
   m_Layer: 0
   m_Name: StartPoint
-  m_TagString: Untagged
+  m_TagString: Connector
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1372956987533699971}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.09, y: 1.81, z: 0}
-  m_LocalScale: {x: 1700, y: 1700, z: 1700}
+  m_LocalPosition: {x: -0.05, y: 0, z: 0}
+  m_LocalScale: {x: 94.44901, y: 94.44901, z: 94.44901}
   m_Children: []
   m_Father: {fileID: 1372956987995895869}
   m_RootOrder: 0
@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1372956987533699971}
-  m_Mesh: {fileID: 1583432573830374512, guid: 31cffbc42ee221a4a8f4b60dd0ffd4d5, type: 3}
+  m_Mesh: {fileID: 1583432573830374512, guid: c6dd9b3816c4a7e44b07d167f89e90d2, type: 3}
 --- !u!23 &1372956987533699973
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 1372956987995895866}
   - component: {fileID: 1372956987995895867}
   - component: {fileID: 1372956987995895868}
+  - component: {fileID: 289231731}
   m_Layer: 0
   m_Name: Wire
   m_TagString: Untagged
@@ -231,6 +232,18 @@ MonoBehaviour:
   numIterations: 20
   stickExtensionModifier: 1.1
   drawGizmos: 0
+--- !u!114 &289231731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372956987995895864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf10312e060d9441babddb5241d2ea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1372956988780193838
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +259,7 @@ GameObject:
   - component: {fileID: 1372956988780193826}
   m_Layer: 0
   m_Name: EndPoint
-  m_TagString: Untagged
+  m_TagString: Connector
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -259,8 +272,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1372956988780193838}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.63, y: 1.66, z: 0}
-  m_LocalScale: {x: 1700, y: 1700, z: 1700}
+  m_LocalPosition: {x: 0.05, y: 0, z: 0}
+  m_LocalScale: {x: 94.44901, y: 94.44901, z: 94.44901}
   m_Children: []
   m_Father: {fileID: 1372956987995895869}
   m_RootOrder: 1
@@ -272,7 +285,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1372956988780193838}
-  m_Mesh: {fileID: 1583432573830374512, guid: 31cffbc42ee221a4a8f4b60dd0ffd4d5, type: 3}
+  m_Mesh: {fileID: 1583432573830374512, guid: c6dd9b3816c4a7e44b07d167f89e90d2, type: 3}
 --- !u!23 &1372956988780193824
 MeshRenderer:
   m_ObjectHideFlags: 0
