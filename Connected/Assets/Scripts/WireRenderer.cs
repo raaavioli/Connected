@@ -11,8 +11,19 @@ public class WireRenderer : MonoBehaviour {
     public Vector3[] points { get; set; } = new Vector3[0];
     public bool connected {
         set {
-            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
             mpb.SetFloat("_Connected", Convert.ToSingle(value));
+            meshRenderer.SetPropertyBlock(mpb, 0);
+        }
+    }
+    public Color startColor {
+        set {
+            mpb.SetColor("_StartColor", value);
+            meshRenderer.SetPropertyBlock(mpb, 0);
+        }
+    }
+    public Color endColor {
+        set {
+            mpb.SetColor("_EndColor", value);
             meshRenderer.SetPropertyBlock(mpb, 0);
         }
     }
@@ -33,6 +44,7 @@ public class WireRenderer : MonoBehaviour {
     // Components.
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
+    private MaterialPropertyBlock mpb;
 
     // Mesh fields.
     private Mesh mesh;
@@ -48,8 +60,10 @@ public class WireRenderer : MonoBehaviour {
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
         mesh = new Mesh();
-	}
-    
+
+        mpb = new MaterialPropertyBlock();
+    }
+
     private void Update() {
         if (points.Length > 0) {
             UpdateWire();

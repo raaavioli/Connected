@@ -53,7 +53,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3128248103319730354, guid: 43e1538a654c140468c31caee205a999, type: 3}
       propertyPath: m_Name
-      value: Battery (1)
+      value: BatteryPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 4925591606289363772, guid: 43e1538a654c140468c31caee205a999, type: 3}
       propertyPath: m_Materials.Array.data[0]
