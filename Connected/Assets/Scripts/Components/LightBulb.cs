@@ -5,7 +5,9 @@ using UnityEngine;
 public class LightBulb : GeneralComponent 
 {
     [SerializeField]
-    private float requiredPower;
+    private float requiredPower = 1.0f;
+    [SerializeField]
+    private float maximumPower = 10f;
     private Dimming dimming;
 
     public LightBulb(float ohm, float watt)
@@ -20,6 +22,9 @@ public class LightBulb : GeneralComponent
 
 	void Update() {
         float power = CalculatePower();
-        dimming.SetIntensity(power / requiredPower);
+        if (power < requiredPower)
+            power = 0;
+        // TODO: Break lamp if power > maximumPower
+        dimming.SetIntensity(power / maximumPower);
     }
 }
