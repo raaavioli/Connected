@@ -57,11 +57,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Angle: 0
-    - _BorderFade: 0.723
-    - _BorderWidth: 0.096
+    - _BorderFade: 0.95
+    - _BorderWidth: 0.08
     - _BumpScale: 1
     - _CheckerScale: 2.7
-    - _CheckeredScale: 1.7
+    - _CheckeredScale: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -81,4 +81,5 @@ Material:
     m_Colors:
     - _Color: {r: 0.13207549, g: 0.105179094, b: 0.069152735, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ObjectScale: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
