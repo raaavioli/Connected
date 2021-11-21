@@ -30,4 +30,8 @@ public class Dimming : MonoBehaviour
         FilamentRenderer.SetPropertyBlock(FilamentMpb);
         LightSource.intensity = Intensity / MaxIntensity;
     }
+
+    public void SetIntensity(float intensity) {
+        Intensity = intensity;
+    }
 }

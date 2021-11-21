@@ -12,4 +12,12 @@ public abstract class GeneralComponent : MonoBehaviour {
         if (positive == null) return false;
         else return positive.positive != null;
     }
+
+    protected float CalculateVoltage() {
+        return resistance * current;
+	}
+
+    protected float CalculatePower() {
+        return CalculateVoltage() * current;
+	}
 }
