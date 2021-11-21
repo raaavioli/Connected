@@ -2,8 +2,8 @@ Shader "Custom/WireShader"
 {
     Properties
     {
-        _StartColor("Start Color", Color) = (0,0,0,1)
-        _EndColor("End Color", Color) = (255,0,0,1)
+        _StartColor("Start Color", Color) = (1,1,1,1)
+        _EndColor("End Color", Color) = (1,1,1,1)
         _MainTex("Albedo (RGB)", 2D) = "white" {}
         _StreakTex("Streak", 2D) = "white" {}
         _Glossiness("Smoothness", Range(0,1)) = 0.5
@@ -45,7 +45,7 @@ Shader "Custom/WireShader"
             void surf(Input IN, inout SurfaceOutputStandard o)
             {
                 fixed4 c = tex2D(_StreakTex, IN.uv_StreakTex + float2(_Time.w, 0.0f));
-                o.Albedo = lerp(_StartColor, _EndColor, IN.uv_MainTex.x);
+                o.Albedo = lerp(_StartColor, _EndColor, IN.uv_MainTex.x * 0.9);
                 o.Emission = _Connected * c * abs(_SinTime.w);
 
                 o.Smoothness = _Glossiness;

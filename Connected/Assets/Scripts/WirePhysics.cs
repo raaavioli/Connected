@@ -56,7 +56,7 @@ public class WirePhysics : MonoBehaviour {
 		InitializeWire();
 	}
 
-	private void Update() {
+	private void FixedUpdate() {
 		Simulate();
 		SetRendererPoints();
 	}
@@ -117,7 +117,7 @@ public class WirePhysics : MonoBehaviour {
 			if (!p.locked) {
 				Vector3 positionBeforeUpdate = p.position;
 				p.position += (p.position - p.prevPosition) * 0.98f;
-				p.position += Physics.gravity * Time.deltaTime * Time.deltaTime;
+				p.position += Physics.gravity * Time.fixedDeltaTime * Time.fixedDeltaTime;
 				p.prevPosition = positionBeforeUpdate;
 			}
 		}
