@@ -1,0 +1,100 @@
+blogData =
+{
+   BlogEntry: [
+      {
+        title: "A humble start",
+        images: ["images/conceptIdea.png"],
+        text: "We felt that nice graphics and interaction ideas on its own is not 'fun' enough, so we decided to make a simple game to go along with it. To not place too much focus on learning controls and rules of the game, we figured that something simple that mostly plays itself automatically would satisfy that requirement. Immediately, the idea of something similar to Auto Chess sprung up in our minds. To add a cool interaction, we figured that we wanted physical objects interact with the screen, to have an effect in the virtual space. In the studio we're working in, there is a SUR40 device, that would allow us to do just that. With that in mind, the idea of interactions like Yu-Gi-Oh struck us, to have physical cards generate characters in the game to fight each other.</br>Because we don't want to heavily focus on game logic, we may want to restrict the fighting to the characters being static, and only using ranged attacks against each other. We may design a terrain stage to 'make sense' of that restriction."
+      },
+      {
+        title: "General model style decided",
+        images: ["images/model1.png"],
+        text: "Once again, to not place too much focus on things not relevant within the scope of the course, we decided to have a very simple graphics. Another gain from having simple graphics is that it won't be as heavy for the device running the program to render the graphics. Considering that we're working with an old SUR40 with not the best specs, it's better to be careful than not, so that we don't overload its GPU. While the general graphic style is low-polygonal and simple, they still need to look different enough to be distinguishable. We have not yet decided on how many unique characters we'll go for, so we'll see how difficult of a task that will be later in the development.</br>What you see here is some sort of a 'mage', capable of shooting magic projectiles at the enemies. It's an old model one of our team members just so happen to have stashed away from playing around with Blender before. It's cool to see that it will be useful once more."
+      },
+      {
+        title: "Stage terrain constructed",
+        images: ["images/stage.png"],
+        text: "We decided upon making a 'battlefield' out in the nature. That way, we won't have to bother with adding additional model that requires more rigid planning, while placing some ground clutter later on can be done in a careless and seemingly random fashion. In an earlier blog post, we mentioned maybe justifying the characters only using ranged attacks. The natural choice to do that, in this environment, is to have a river separating the opposing forces. The design is very minimalistic and low-polygonal, as is required by our choice of style. The stage may be scaled up or down depending on how large we need it to be, without too much hassle."
+      },
+      {
+        title: "First characters completed",
+        images: ["images/enigma.png", "images/colonel.png", "images/plane.png", "images/witch.png"],
+        text: "The three first characters for the project are now complete. We have the Witch, the Colonel and Enigma. All of these are modeled, textured procedurally, then textured through texture baking, then rigged and animated as well, all inside of Blender. The Witch is meant to be a magic user, casting spells to attack her enemies. The Colonel is an army commander who calls in air support to wage war on the opponents. Enigma is a recently unearthed ancient construct with an unknown (but violent) purpose and a powerful laser beam."
+      },
+      {
+        title: "Possible card detector prototyped",
+        images: ["images/card_recognition_1st_test.png"],
+        text: "The problem of how to have the SUR40 read and identify (or parse, if you will) the playing cards is far from a trivial problem. Therefore, building off open source project that does something similar makes sense. <a href='https://github.com/EdjeElectronics/OpenCV-Playing-Card-Detector'>This project</a> was found to be able to do what we need, while being hand-crafted and understandable by humans. It was originally meant to work on a Raspberry Pi, but now we are able to run the project using a webcam on one of our laptops, and it works moderately well. The large problem however is how to get it to work on the SUR40, especially if the PixelSense data is not accessible as a video stream. More experimentation will have to be done to tell for sure, but either way we proceed, we can likely learn something from the computer vision techniques that this project employs."
+      },
+      {
+        title: "Stage terrain improved",
+        images: ["images/improvedStage.png"],
+        text: "The stage everything takes place on was a little bare. We decided to improve it by adding some ground clutter. We went online to look for available resources that fits the theme. Alas, only proper rocks were found. The grass and branches were modelled in Blender. We sure think it looks better. What do you think?"
+      },
+      {
+        title: "Projectiles added",
+        images: ["images/AirStrike.png", "images/bubbles.png", "images/laser.png", "images/lightning.png"],
+        text: "Projectiles have been added for the three existing characters. To create the effects, a couple of custom shaders were written to get desired effects. The Witch shoots lightning primarily, but a bubble projectile was also created in case that is desired in the actual game. Enigma charges up and shoots a powerful laser. The laser is essentially a cylinder rendered through three shader passes, all adding individual layers to the resulting beam. The Colonel calls in a powerful air strike plane, which crashes into the target creating a cloud of fire smoke while the plane is ripped into pieces. The smoke effect is a particle system with a custom shader using a custom made smoke texture which is used to give the smoke/fire its shape and color."
+      },
+      {
+        title: "Game Design choices made",
+        images: ["images/gameloop.png"],
+        text: "At this point the project started to reach a somewhat playable state. The next step was to actually build a game out of it, and for that a basic game design was needed. A couple of group members documented a couple of different possible behaviours, and then the group collectively chose their favourite to implement. The choice made was to have all characters on the board act simultaneously, and to split up a single game in several rounds, resulting in a scoreboard results that determines the winner after a certain amount of rounds."
+      },
+      {
+        title: "Card parsing works!",
+        images: ["images/correctedDescriptiveImage.png", "images/cardspawn.gif"],
+        text: "After a lot of wrestling to with the SUR40, we finally have a complete pipeline from gathering data from the SUR40, to parsing the cards from the image and interpreting the results in Unity to spawn characters. First, the image is gathered from the SUR40 by hijacking an old example program called RawImageVisualizer and the data is sent over TCP to a python server on the same machine. The python server then uses OpenCV to analyze the image. The two short edges of the screen are split into six rectangles each, as can be seen in the image, where we look for a card by trying to count the number of large enough contours, and that way deciding the rank. The suit is not considered, as that would be unnecessary for our purposes right now. The card information from each rectangle is encoded into a string and sent to Unity over UDP on the same machine. Unity then interprets the string and spawns characters accordingly, as can be seen in the gif."
+      },
+      {
+        title: "Squishy character added",
+        images: ["images/squishy.png"],
+        text: "The new character squishy is a water character shooting bubbles. The character was not modelled in Blender as the other characters, but is created by sphere-tracing into a signed distance field only using mathematical formulas in shaders to describe the shapes and smooth blending of those in the character."
+      },
+      {
+        title: "Battlefield animated river and waterfall",
+        images: ["images/waterfall.gif"],
+        text: "In previous versions of the battlefield terrain, there has been water down the middle of the platform. We have thought from the start that it would look nice if there was some movement or animation to the water. When the new platform style was created, we got to work on making the water move. This was accomplished through a surface shader on the water, animating the UV coordinates that the various textures are sampled at. The speed of the water depends on how steep the slope of the water is. The waterfall was created using a custom particle sprite generated as a smoke ball in Blender, brought into Unity and made to act like water droplets cascading off the platform as the flow increases."
+      },
+      {
+        title: "General environment changes",
+        images: ["images/environmentupgrade.png", "images/flag.png", "images/skybox.png"],
+        text: "Throughout the project, the environment has been continuously improved. The model was changed to have more detail and depth, compared to the flat environment used initially. A skybox was added to make the background more interesting. There were also rock platforms added for the characters to spawn on, having swirling glowing light to enhance the feeling of the rocks magically hovering in the air. Each team was eventually given low-poly flags, where the fabric was simulated using Unity’s cloth simulation system."
+      },
+      {
+        title: "Armor and Doctor characters finished",
+        images: ["images/armor.gif", "images/doctor.gif"],
+        text: "We knew that we wanted to have at least six playable characters, so we sat down to discuss what characters were needed in addition to the Witch, Enigma, Squishy and the Colonel. We figured we wanted each character to have a special ability, so the Witch should be a balanced character, Enigma should be a glass cannon, Squishy should be able to deal damage to multiple opponents at once and the Colonel should also be special in some way. We felt that both a tanking character and a healing character were missing, so the Armor was created as a tank, with a lot of health and the ability to move a shield to allies, protecting them, and the Doctor was created to be able to heal allies that were next to them, being unable to cause damage to opponents."
+      },
+      {
+        title: "Card UI improvements and character stats",
+        images: ["images/UI1.png", "images/UI2.png", "images/UI3.png"],
+        text: "The UI was altered so that the areas for card placement now are shaded to be semi-transparent and has a glow when no card is placed. Cards can also be rotated either vertically or horizontally, which changes the color of the border around the card placement area to reflect whether a character is in an offensive or a defensive state. UI was also added to describe the character stats to the players. The players now get to know the character names, health, attack, defense and speed characteristics. Attack, Defense and Speed reflects how strong offensively, strong defensively and fast a character is."
+      },
+      {
+        title: "Menus Constructed",
+        images: ["images/bpMainMenu.png", "images/bpInGameMenu.png", "images/bpInGameButtons.png", "images/bpContinue.png"],
+        text: "There is now a proper menu to navigate the programme. The game flow logic works as expected, and the users are now able to complete a game without a keyboard, but they still need a mouse until proper touch interaction is implemented. The menu is simple, but it works."
+      },
+      {
+        title: "Shield effect for defensive mode",
+        images: ["images/combinedShield.png", "images/shieldModel.png", "images/hexPattern.png", "images/shieldShaderTest.png"],
+        text: "Playing around with shaders in Unity for this one. This shader features a fresnel effect with 'magical' colors for the appropriate effect. A model for a shield was created in Blender, as well as a texture that is a hexagonal pattern in GIMP. Unwrapping the UV-coordinates of the Blender model, and moving the faces around then made the pattern look good enough on the shield model. After having imported everything to Unity, tweaking the values of the shader inside the Unity editor made it look as intended, including the color and intesity of the effects. At this point, the finished prefab could then applied to the characters as they enter their defensive modes."
+      },
+      {
+        title: "TouchScript implemented",
+        images: ["images/bpTouchScript.png"],
+        text: "Unity Asset Store had a working library for implementing various touch gestures. While we do not need the more advanced gestures, using an already working framework sure isn't bad. Every object previously interactable with mouse cursors are now also interactable with simple press touch gestures. Now, no mouse or keyboard is needed to interact with the programme. The blue circles on the image is different touches being detected. Those on the card boxes are detecting the cards, while the other five are the five fingers of a hand, providing proof of concept that the programme can handle multiple touches simultaneously. We shouldn't ever reach 15 individual touch interactions, so this should work. Those blue circle cursors are only for debug purposes; they won't be visible in the final product."
+      },
+      {
+        title: "Character interaction implemented",
+        images: ["images/bpCharacterInteraction.gif"],
+        text: "We wanted the users to be less passive during the Combat Phase of the game, so we added the ability for the users to once per round double-tap one of their characters. This triggered a strong 'heal' effect, to be used as one wishes, adding additional depth to the gameplay. Once again, this has been implemented excellently using TouchScript."
+      },
+      {
+        title: "Project Finished",
+        images: ["images/logo.png"],
+        text: "The short two months of development have passed, and today, after so much hard work by the entire team, we have a finished product. It is with great joy that we can claim that our hard work has paid off, with a product we're incredibly proud of. Of course, there's always more one can do, but the fact that we're enjoying the product as users, as well we've enjoyed it as its developers speaks volumes. The kind words from otherwise uninvolved users has been a great boost to our productivity and motivation; thank you, to all of you. We've learned so much, and had a fun experience doing this, and one can only hope that the future holds similarly exciting projects in store for us. Until the next time!"
+      }
+   ]
+}
