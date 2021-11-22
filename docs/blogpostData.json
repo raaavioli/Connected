@@ -2,8 +2,18 @@ blogData =
 {
    BlogEntry: [
       {
+        title: "Initial concept idea created",
+        images: ["images/concept.png"],
+        text: "The concept idea, as the image may hint at, is to make an electrical circuitry simulation. While the image is very basic, it shows the general gist of what we want to capture, placing and connecting components to make circuits. What the images <i>doesn't</i> reveal is that we want to do it in VR, to allow proper 3D exploration, as you would do in reality. Also, while not yet fully determined, it would be cool to have a background react to failures or successes by the user. We'll start off humbly, by implementing a 'sandbox' environment, with the possibility of gamifying it with solving problems in the future."
+      },
+      {
         title: "",
-        images: ["images/placeholdercat.png"],
+        images: [""],
+        text: ""
+      },
+      {
+        title: "",
+        images: [""],
         text: ""
       }
    ]
