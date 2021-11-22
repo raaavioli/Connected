@@ -25,7 +25,6 @@ public class ToolMarker : MonoBehaviour
         if (CanInstantiate())
         {
             GameObject tool = InstantiateTool(transform.position);
-            tool.transform.localScale = new Vector3(1, 1, 1);
             tool.transform.position -= transform.forward * 0.1f;
         }
     }
@@ -51,7 +50,7 @@ public class ToolMarker : MonoBehaviour
     {
         if (CanInstantiate())
         {
-            return Instantiate(toolPrefab, position, transform.rotation);
+            return Instantiate(toolPrefab, position, transform.rotation * Quaternion.LookRotation(Vector3.back));
         }
         else
         {
