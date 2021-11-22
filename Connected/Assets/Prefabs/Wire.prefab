@@ -624,7 +624,7 @@ MonoBehaviour:
   minimumY: 0
   numMiddlePoints: 50
   numIterations: 20
-  stickExtensionModifier: 1.1
+  stickExtensionModifier: 1
   drawGizmos: 0
 --- !u!114 &4651223236595471126
 MonoBehaviour:
