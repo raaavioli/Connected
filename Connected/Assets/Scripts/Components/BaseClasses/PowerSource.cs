@@ -56,10 +56,12 @@ public abstract class PowerSource : GeneralComponent {
     {
         float current = voltage / (resistance + Mathf.Epsilon); //TODO: Explode powersource or whatever, when current is near-infinite.
         this.current = current;
+        this.positive.ShowCurrent();
         GeneralComponent nextComponent = this.positive.positive;
 
         while (nextComponent != this) {
             nextComponent.current = current;
+            nextComponent.positive.ShowCurrent();
             nextComponent = nextComponent.positive.positive;
         }
     }

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class LightBulb : GeneralComponent 
 {
+    [SerializeField]
     private float requiredPower;
+    private Dimming dimming;
 
     public LightBulb(float ohm, float watt)
     {
@@ -12,7 +14,12 @@ public class LightBulb : GeneralComponent
         requiredPower = watt;
     }
 
-    void Update() {
-        //TODO: Animate if  watt is high enough
+	private void Awake() {
+        dimming = GetComponent<Dimming>();
+	}
+
+	void Update() {
+        float power = CalculatePower();
+        dimming.SetIntensity(power / requiredPower);
     }
 }
