@@ -7,9 +7,14 @@ blogData =
         text: "The concept idea, as the image may hint at, is to make an electrical circuitry simulation. While the image is very basic, it shows the general gist of what we want to capture, placing and connecting components to make circuits. What the images <i>doesn't</i> reveal is that we want to do it in VR, to allow proper 3D exploration, as you would do in reality. Also, while not yet fully determined, it would be cool to have a background react to failures or successes by the user. We'll start off humbly, by implementing a 'sandbox' environment, with the possibility of gamifying it with solving problems in the future."
       },
       {
-        title: "",
-        images: [""],
-        text: ""
+        title: "VR environment created",
+        images: ["images/vrgif.gif"],
+        text: "Using HTC Vive, Steam VR, and Unity with OpenXR, we now have a basic VR environment to work within. To our surprise, the libraries used for working with VR in Unity has already most of the things cut out for us. There are already components existing to make objects interactable with the VR controllers in a way that we want to do. One major thorn for us, is the fact that we need physical sensor stations to register the headset movement. Yet, because we don't expect to be moving around much, this might be a lesser issue than initially imagined.</br>The gif shows us interacting with a generic object. It is even throwable! It might be cool to explore throwing components away that the user doesn't want anymore."
+      },
+      {
+        title: "Simple electrical components added",
+        images: ["images/knife-switch-model.png", "images/knife-switch-ref.png", "images/battery-model.png", "images/battery-ref.png"],
+        text: "These two components for use on the electrical board have now been added. The battery is a C battery with a typical voltage of 1.5V and a storage capacity of up to 8000 mAh. A standard household light bulb requires 120V, so if we were to power one with typical C batteries, we would need to use 80 - this is why for the sake of convenience and simplicity, the model’s “voltage” can be adjusted in Unity, and the battery can be a representation of any other type of battery for the VR demonstrations.</br></br>The knife switch is often used in education due to the clarity of its design: it is very easy to see when the switch is on and when it is off, compared to e.g. a regular lightswitch. While this type of switch is no longer commonly used in real-life situations, it is very useful in scientific experiments such as the ones the students in grades 7-9 might be performing. This is why we have included it in the project, although we plan to also have other options such as a safety switch."
       },
       {
         title: "",
