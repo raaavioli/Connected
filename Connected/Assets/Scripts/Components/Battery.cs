@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Battery : PowerSource {
+    [SerializeField]
+    float Voltage = 12f;
 
-    public Battery(float volt, float ampere) {
-        voltage = volt;
-        current = ampere;
+    [SerializeField]
+    float Ampere = 1f;
+
+    void Awake()
+    {
+        voltage = Voltage;
+        current = Ampere;
     }
 }

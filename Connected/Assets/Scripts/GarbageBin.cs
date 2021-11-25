@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GarbageBin : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collider)
     {
-        Destroy(collision.gameObject);
+        Destroy(collider.gameObject);
     }
 }
