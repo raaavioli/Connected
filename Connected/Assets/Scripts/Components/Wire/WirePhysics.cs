@@ -168,7 +168,7 @@ public class WirePhysics : MonoBehaviour {
 		Vector3[] rawPoints = new Vector3[points.Length];
 
 		for (int i = 0; i < points.Length; ++i) {
-			rawPoints[i] = points[i].position;
+			rawPoints[i] = transform.InverseTransformPoint(points[i].position);
 		}
 
 		wireRenderer.points = rawPoints;

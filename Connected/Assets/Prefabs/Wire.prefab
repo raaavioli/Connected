@@ -517,7 +517,6 @@ GameObject:
   - component: {fileID: 4651223236595471124}
   - component: {fileID: 4651223236595471120}
   - component: {fileID: 4651223236595471123}
-  - component: {fileID: 2719841456989897425}
   - component: {fileID: 4651223236595471122}
   - component: {fileID: 4651223236595471125}
   - component: {fileID: 4651223236595471126}
@@ -593,20 +592,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2719841456989897425
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4651223236595471121}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!114 &4651223236595471122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -616,7 +601,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4651223236595471121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bcbea5007898bc41ad5c96b725f293c, type: 3}
+  m_Script: {fileID: 11500000, guid: aa911e1b3706f0b4aae574d69ccf8df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   radialResolution: 8
@@ -631,7 +616,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4651223236595471121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a382a9b174546f84491c29a8dab34243, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c211cae89760b24d945ef0ac9a58993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startPoint: {fileID: 4651223236001153197}
@@ -649,6 +634,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 4651223236595471121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cf10312e060d9441babddb5241d2ea5, type: 3}
+  m_Script: {fileID: 11500000, guid: a83c4ac17ef1f29448fc2bf2767bcf79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
