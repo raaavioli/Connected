@@ -5,6 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(MeshCollider))]
 public class WireRenderer : MonoBehaviour {
     // --- Public properties ---
 
@@ -44,7 +45,6 @@ public class WireRenderer : MonoBehaviour {
     // Components.
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
-    private MaterialPropertyBlock mpb;
 
     // Mesh fields.
     private Mesh mesh;
@@ -54,8 +54,9 @@ public class WireRenderer : MonoBehaviour {
 
     // Other fields.
     private Vector3[] tangents;
+    private MaterialPropertyBlock mpb;
 
-	private void Awake() {
+    private void Awake() {
         // Initialize mesh.
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();

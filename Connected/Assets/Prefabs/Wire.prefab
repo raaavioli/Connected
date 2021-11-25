@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4651223235265839928}
   - component: {fileID: 7874701828570862095}
   - component: {fileID: 8440630935510300556}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EndPoint
   m_TagString: Connector
   m_Icon: {fileID: 0}
@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 8574887767651803687}
   - component: {fileID: 7044312372169333486}
   - component: {fileID: 7584173469487124614}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: StartPoint
   m_TagString: Connector
   m_Icon: {fileID: 0}
@@ -517,10 +517,11 @@ GameObject:
   - component: {fileID: 4651223236595471124}
   - component: {fileID: 4651223236595471120}
   - component: {fileID: 4651223236595471123}
+  - component: {fileID: 2719841456989897425}
   - component: {fileID: 4651223236595471122}
   - component: {fileID: 4651223236595471125}
   - component: {fileID: 4651223236595471126}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -592,6 +593,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &2719841456989897425
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4651223236595471121}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!114 &4651223236595471122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -621,10 +636,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 4651223236001153197}
   endPoint: {fileID: 4651223235265839878}
-  minimumY: 0
   numMiddlePoints: 50
-  numIterations: 20
-  stickExtensionModifier: 1.1
+  numIterations: 40
+  stickExtensionModifier: 1
   drawGizmos: 0
 --- !u!114 &4651223236595471126
 MonoBehaviour:
