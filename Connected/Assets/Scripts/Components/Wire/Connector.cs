@@ -54,10 +54,9 @@ public class Connector : MonoBehaviour {
 	private void OnTriggerEnter(Collider other) {
 		if (other.CompareTag("Slot")) {
             connectedSlot = other.GetComponent<Slot>();
-			if (IsHeld()) {
-				interactable.attachedToHand.DetachObject(this.gameObject);
+			if (connectedSlot.IsEmpty()) {
+				ConnectionActions();
 			}
-			ConnectionActions();
 		}
 	}
 
@@ -73,16 +72,12 @@ public class Connector : MonoBehaviour {
 		}
 	}
 
-	public void DisconnectionActions() {
+	private void DisconnectionActions() {
 		connectedSlot.Disconnect();
 		connectedSlot = null;
 		rb.isKinematic = false;
 		transform.parent = associatedWire.transform;
 		StartCoroutine(DelayEnableTrigger());
-
-		if (!IsHeld()) {
-			rb.AddForce(Vector3.up, ForceMode.VelocityChange);
-		}
 
 		meshRenderer.material = neutralMaterial;
 		associatedWire.RecolorWire(this, neutralColor);

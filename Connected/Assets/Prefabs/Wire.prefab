@@ -144,9 +144,9 @@ MonoBehaviour:
   positiveMaterial: {fileID: 2100000, guid: 9852dc399720ecb4bb0148c4595b3a71, type: 2}
   negativeMaterial: {fileID: 2100000, guid: f25943abad3afe1408a1315898fc6f1a, type: 2}
   neutralMaterial: {fileID: 2100000, guid: 4101295b85b7f9243b747925b548986f, type: 2}
-  positiveColor: {r: 1, g: 0, b: 0, a: 0}
-  negativeColor: {r: 0, g: 0, b: 0, a: 0}
-  neutralColor: {r: 1, g: 1, b: 1, a: 0}
+  positiveColor: {r: 1, g: 0, b: 0, a: 1}
+  negativeColor: {r: 0, g: 0, b: 0, a: 1}
+  neutralColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &7874701828570862095
 MonoBehaviour:
   m_ObjectHideFlags: 0

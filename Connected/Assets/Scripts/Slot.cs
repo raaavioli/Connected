@@ -33,10 +33,11 @@ public class Slot : MonoBehaviour
 	}
 
 	public bool InitiateConnection(Connector newConnector) {
-        if (connectedWire != null) {
-            connectedConnector.DisconnectionActions();
-        }
-        return Connect(newConnector);
+        if (IsEmpty()) {
+            return Connect(newConnector);
+        } else {
+            return false;
+		}
     }
 
 	private bool Connect(Connector connector) {
@@ -76,5 +77,9 @@ public class Slot : MonoBehaviour
 
         connectedConnector = null;
         connectedWire = null;
+	}
+
+    public bool IsEmpty() {
+        return connectedConnector == null;
 	}
 }
