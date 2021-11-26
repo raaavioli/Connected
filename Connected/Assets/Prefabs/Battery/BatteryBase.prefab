@@ -261,6 +261,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1833535052654443472}
     m_Modifications:
+    - target: {fileID: 8085538593845480285, guid: 9f89de5a9e8b70d4e845afba3d4fc2ac, type: 3}
+      propertyPath: voltage
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8268576396971426155, guid: 9f89de5a9e8b70d4e845afba3d4fc2ac, type: 3}
       propertyPath: m_RootOrder
       value: 0
