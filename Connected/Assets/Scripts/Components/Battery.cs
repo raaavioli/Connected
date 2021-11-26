@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerSource : GeneralComponent {
+public class Battery : GeneralComponent {
     [SerializeField]
     private float voltage;
 
@@ -16,10 +16,10 @@ public class PowerSource : GeneralComponent {
         CircuitManager.RemovePowerSource(this);
     }
 
-    public List<PowerSource> CheckCircuit() // Returns other power sources that is in the circuit for the circuit manager.
+    public List<Battery> CheckCircuit() // Returns other power sources that is in the circuit for the circuit manager.
     {
         GeneralComponent nextComponent = null;
-        List<PowerSource> foundPowerSources = new List<PowerSource>();
+        List<Battery> foundPowerSources = new List<Battery>();
         foundPowerSources.Add(this);
 
         float resistanceSum = 0.0f;
@@ -33,8 +33,8 @@ public class PowerSource : GeneralComponent {
         {
             resistanceSum += nextComponent.resistance;
 
-            if (nextComponent.GetType() == typeof(PowerSource)) {
-                PowerSource foundPowerSource = (PowerSource)nextComponent;
+            if (nextComponent.GetType() == typeof(Battery)) {
+                Battery foundPowerSource = (Battery)nextComponent;
                 foundPowerSources.Add(foundPowerSource);
                 voltageSum += foundPowerSource.voltage;
             }
