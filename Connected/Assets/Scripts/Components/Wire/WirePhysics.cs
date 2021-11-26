@@ -148,7 +148,6 @@ public class WirePhysics : MonoBehaviour {
 				if (!p.locked) {
 					Vector3 positionBeforeUpdate = p.position;
 
-					Ray collisionRay = new Ray(p.position, Physics.gravity);
 					RaycastHit hit;
 					if (Physics.Raycast(p.position, Physics.gravity, out hit, wireRenderer.GetRadius())) {
 						p.position = hit.point - gravityDirection * wireRenderer.GetRadius();
