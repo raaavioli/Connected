@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PowerSource : GeneralComponent {
+public class PowerSource : GeneralComponent {
     [SerializeField]
     private float voltage;
 
