@@ -40,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8787704573140212689}
-  m_Mesh: {fileID: -2159965483007997719, guid: 716a1c8c5626e76498ac8f257953b9ec, type: 3}
+  m_Mesh: {fileID: -2159965483007997719, guid: fa605b45db1ce894e9e3f800d1d322cf, type: 3}
 --- !u!23 &7130551366278625796
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -94,3 +94,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 495dc487b65890f4682c7387b244db1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Voltage: 12
+  Ampere: 1

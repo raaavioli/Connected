@@ -19,9 +19,9 @@ public class Wire : MonoBehaviour {
 	}
 
 	private void Update() {
-		if (positive == null || negative == null) {
-			wireRenderer.connected = false;
-		}
+		//if (positive == null || negative == null) {
+		//	wireRenderer.connected = false;
+		//}
 	}
 
 	public void ShowCurrent() {

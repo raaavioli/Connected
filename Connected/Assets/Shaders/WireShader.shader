@@ -45,7 +45,7 @@ Shader "Custom/WireShader"
             void surf(Input IN, inout SurfaceOutputStandard o)
             {
                 fixed4 c = tex2D(_StreakTex, IN.uv_StreakTex + float2(_Time.w, 0.0f));
-                o.Albedo = lerp(_StartColor, _EndColor, IN.uv_MainTex.x * 0.9);
+                o.Albedo = lerp(_StartColor, _EndColor, IN.uv_MainTex.x);
                 o.Emission = _Connected * c * abs(_SinTime.w);
 
                 o.Smoothness = _Glossiness;
