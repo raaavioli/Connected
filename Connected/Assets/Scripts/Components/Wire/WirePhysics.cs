@@ -32,8 +32,6 @@ public class WirePhysics : MonoBehaviour {
 	[SerializeField]
 	private Transform endPoint;
 	[SerializeField]
-	private float minimumY;
-	[SerializeField]
 	[Range(0, 100)]
 	private int numMiddlePoints;
 	[SerializeField]
@@ -50,10 +48,11 @@ public class WirePhysics : MonoBehaviour {
 	private Point[] points;
 	private Stick[] sticks;
 	private float stickLength;
-
+	private Vector3 gravityDirection;
 	private void Awake() {
 		wireRenderer = GetComponent<WireRenderer>();
 		InitializeWire();
+		gravityDirection = Physics.gravity.normalized;
 	}
 
 	private void FixedUpdate() {
@@ -113,7 +112,9 @@ public class WirePhysics : MonoBehaviour {
 
 		UpdateStickLength();
 
-		foreach (Point p in points) {
+		var shuffledIndices = Enumerable.Range(0, points.Length).ToList().OrderBy(e => Random.value);
+		foreach (int index in shuffledIndices) {
+			Point p = points[index];
 			if (!p.locked) {
 				Vector3 positionBeforeUpdate = p.position;
 				p.position += (p.position - p.prevPosition) * 0.98f;
@@ -123,21 +124,42 @@ public class WirePhysics : MonoBehaviour {
 		}
 
 		for (int i = 0; i < numIterations; ++i) {
-			foreach (Stick stick in sticks) {
+			shuffledIndices = Enumerable.Range(0, sticks.Length).ToList().OrderBy(e => Random.value);
+			foreach (int index in shuffledIndices) {
+				Stick stick = sticks[index];
 				Vector3 stickCenter = (stick.pointA.position + stick.pointB.position) / 2;
 				Vector3 stickDirection = (stick.pointA.position - stick.pointB.position).normalized;
 				
 				if (!stick.pointA.locked) {
 					stick.pointA.position = stickCenter + stickDirection * stickLength / 2;
-					stick.pointA.position = new Vector3(stick.pointA.position.x, Mathf.Clamp(stick.pointA.position.y, minimumY + wireRenderer.GetRadius(), float.PositiveInfinity), stick.pointA.position.z);
+					stick.pointA.position = new Vector3(stick.pointA.position.x, stick.pointA.position.y, stick.pointA.position.z);
 				}
 
 				if (!stick.pointB.locked) {
 					stick.pointB.position = stickCenter - stickDirection * stickLength / 2;
-					stick.pointB.position = new Vector3(stick.pointB.position.x, Mathf.Clamp(stick.pointB.position.y, minimumY + wireRenderer.GetRadius(), float.PositiveInfinity), stick.pointB.position.z);
+					stick.pointB.position = new Vector3(stick.pointB.position.x, stick.pointB.position.y, stick.pointB.position.z);
+				}
+			}
+
+			// Look for collisions from gravity force.
+			shuffledIndices = Enumerable.Range(0, points.Length).ToList().OrderBy(e => Random.value);
+			foreach (int index in shuffledIndices) {
+				Point p = points[index];
+				if (!p.locked) {
+					Vector3 positionBeforeUpdate = p.position;
+
+					RaycastHit hit;
+					if (Physics.Raycast(p.position, Physics.gravity, out hit, wireRenderer.GetRadius())) {
+						p.position = hit.point - gravityDirection * wireRenderer.GetRadius();
+					}
+
+					p.prevPosition = positionBeforeUpdate;
 				}
 			}
 		}
+
+		points[0].position = startPoint.position;
+		points[points.Length - 1].position = endPoint.position;
 	}
 
 	// Sends the points to the wire renderer for rendering.
@@ -145,7 +167,7 @@ public class WirePhysics : MonoBehaviour {
 		Vector3[] rawPoints = new Vector3[points.Length];
 
 		for (int i = 0; i < points.Length; ++i) {
-			rawPoints[i] = points[i].position;
+			rawPoints[i] = transform.InverseTransformPoint(points[i].position);
 		}
 
 		wireRenderer.points = rawPoints;

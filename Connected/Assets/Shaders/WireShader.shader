@@ -7,7 +7,7 @@ Shader "Custom/WireShader"
         _MainTex("Albedo (RGB)", 2D) = "white" {}
         _StreakTex("Streak", 2D) = "white" {}
         _Glossiness("Smoothness", Range(0,1)) = 0.5
-        [MaterialToggle] _Connected("Connected", Float) = 0
+        _Connected("Connected", Int) = 0
     }
         SubShader
         {
@@ -44,9 +44,9 @@ Shader "Custom/WireShader"
 
             void surf(Input IN, inout SurfaceOutputStandard o)
             {
-                fixed4 c = tex2D(_StreakTex, IN.uv_StreakTex + float2(_Time.w, 0.0f));
-                o.Albedo = lerp(_StartColor, _EndColor, IN.uv_MainTex.x * 0.9);
-                o.Emission = _Connected * c * abs(_SinTime.w);
+                fixed4 c = tex2D(_StreakTex, IN.uv_StreakTex + float2(_Connected * _Time.w, 0.0f));
+                o.Albedo = lerp(_StartColor, _EndColor, IN.uv_MainTex.x);
+                o.Emission = abs(_Connected) * c * abs(_SinTime.w);
 
                 o.Smoothness = _Glossiness;
                 o.Alpha = c.a;

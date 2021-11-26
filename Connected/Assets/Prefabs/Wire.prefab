@@ -114,8 +114,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0005275437, y: 0.00029999996, z: 0.001379853}
-  m_Center: {x: 0, y: 0, z: -0.00033480392}
+  m_Size: {x: 0.0005275438, y: 0.00029999999, z: 0.0013743635}
+  m_Center: {x: 0, y: 0, z: -0.00033205916}
 --- !u!135 &5136768136734778167
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -144,9 +144,9 @@ MonoBehaviour:
   positiveMaterial: {fileID: 2100000, guid: 9852dc399720ecb4bb0148c4595b3a71, type: 2}
   negativeMaterial: {fileID: 2100000, guid: f25943abad3afe1408a1315898fc6f1a, type: 2}
   neutralMaterial: {fileID: 2100000, guid: 4101295b85b7f9243b747925b548986f, type: 2}
-  positiveColor: {r: 1, g: 0, b: 0, a: 0}
-  negativeColor: {r: 0, g: 0, b: 0, a: 0}
-  neutralColor: {r: 1, g: 1, b: 1, a: 0}
+  positiveColor: {r: 1, g: 0, b: 0, a: 1}
+  negativeColor: {r: 0, g: 0, b: 0, a: 1}
+  neutralColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &7874701828570862095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,8 +367,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0005275437, y: 0.00029999996, z: 0.001379853}
-  m_Center: {x: 0, y: 0, z: -0.00033480392}
+  m_Size: {x: 0.0005275438, y: 0.00029999999, z: 0.0013743635}
+  m_Center: {x: 0, y: 0, z: -0.00033205916}
 --- !u!135 &6017319243404475659
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -520,7 +520,7 @@ GameObject:
   - component: {fileID: 4651223236595471122}
   - component: {fileID: 4651223236595471125}
   - component: {fileID: 4651223236595471126}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -601,7 +601,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4651223236595471121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bcbea5007898bc41ad5c96b725f293c, type: 3}
+  m_Script: {fileID: 11500000, guid: aa911e1b3706f0b4aae574d69ccf8df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   radialResolution: 8
@@ -616,15 +616,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4651223236595471121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a382a9b174546f84491c29a8dab34243, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c211cae89760b24d945ef0ac9a58993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startPoint: {fileID: 4651223236001153197}
   endPoint: {fileID: 4651223235265839878}
-  minimumY: 0
   numMiddlePoints: 50
-  numIterations: 20
-  stickExtensionModifier: 1.1
+  numIterations: 40
+  stickExtensionModifier: 1
   drawGizmos: 0
 --- !u!114 &4651223236595471126
 MonoBehaviour:
@@ -635,6 +634,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 4651223236595471121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cf10312e060d9441babddb5241d2ea5, type: 3}
+  m_Script: {fileID: 11500000, guid: a83c4ac17ef1f29448fc2bf2767bcf79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
