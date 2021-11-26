@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CircuitManager : MonoBehaviour 
 {
-    private List<PowerSource> powerSources = new List<PowerSource>();
+    private List<Battery> batteries = new List<Battery>();
     private static CircuitManager instance;
 
     private void Awake()
@@ -20,28 +20,28 @@ public class CircuitManager : MonoBehaviour
         TraceCircuits();
     }
 
-    public static void AddPowerSource(PowerSource powerSource)
+    public static void AddPowerSource(Battery battery)
     {
         if (instance != null) {
-            instance.powerSources.Add(powerSource);
+            instance.batteries.Add(battery);
         }
     }
 
-    public static void RemovePowerSource(PowerSource powerSource)
+    public static void RemovePowerSource(Battery battery)
     {
         if (instance != null) {
-            instance.powerSources.Remove(powerSource);
+            instance.batteries.Remove(battery);
         }
     }
 
     private void TraceCircuits() {
-        List<PowerSource> foundPowerSources = new List<PowerSource>();
+        List<Battery> foundPowerSources = new List<Battery>();
         
-        foreach (PowerSource powerSource in powerSources) {
-            if (foundPowerSources.Contains(powerSource)) {
+        foreach (Battery battery in batteries) {
+            if (foundPowerSources.Contains(battery)) {
                 continue;
             } else {
-                foundPowerSources.AddRange(powerSource.CheckCircuit());
+                foundPowerSources.AddRange(battery.CheckCircuit());
             }
         }
     }
