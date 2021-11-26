@@ -9,9 +9,9 @@ public class WireRenderer : MonoBehaviour {
     // --- Public properties ---
 
     public Vector3[] points { get; set; } = new Vector3[0];
-    public bool connected {
+    public int connected {
         set {
-            mpb.SetFloat("_Connected", Convert.ToSingle(value));
+            mpb.SetInt("_Connected", value);
             meshRenderer.SetPropertyBlock(mpb, 0);
         }
     }
@@ -107,7 +107,7 @@ public class WireRenderer : MonoBehaviour {
     // Generates the vertices of the mesh and populates the vertex array.
 	private void GenerateVertices() {
         // Initialize vertex array and calculate angle between vertices.
-        vertices = new Vector3[points.Length * radialResolution];
+        vertices = new Vector3[points.Length * (radialResolution + 1)];
         float rotationAngle = 360.0f / radialResolution;
 
         // For aach point along the wire, place a number of vertices as the corners of a polygon around the point.
@@ -124,9 +124,9 @@ public class WireRenderer : MonoBehaviour {
             // Find the vector with which to offset the vertices from the point.
             // The vector is found using the cross product between the tangent and an arbitrary, non-parallel vector, for the direction and the radius for the magnitude.
             Vector3 orthogonalOffset = Vector3.Cross(averagedTangent, ParallelVectors(averagedTangent, Vector3.one) ? Vector3.up : Vector3.one).normalized * radius;
-            for (int j = 0; j < radialResolution; ++j) {
+            for (int j = 0; j <= radialResolution; ++j) {
                 // For each vertex, rotate the offset around the tangent and place the vertex at the sum of the point and the offset.
-                vertices[i * radialResolution + j] = points[i] + Quaternion.AngleAxis(rotationAngle * j, averagedTangent) * orthogonalOffset;
+                vertices[i * (radialResolution + 1) + j] = points[i] + Quaternion.AngleAxis(rotationAngle * j, averagedTangent) * orthogonalOffset;
 			}
 		}
 	}
@@ -144,17 +144,17 @@ public class WireRenderer : MonoBehaviour {
             for (int j = 0; j < radialResolution; ++j) {
                 // Calculate the special term that is able to handle the last vertex in the ring.
                 // If the current vertex is the last vertex, we need to access the first vertex again, so the index offset is 0.
-                int loopingIndex = j == radialResolution - 1 ? 0 : j + 1;
+                //int loopingIndex = j == radialResolution - 1 ? 0 : j + 1;
                 
                 // The first quad.
-                triangles[triangleIndex++] = i * radialResolution + j;
-                triangles[triangleIndex++] = i * radialResolution + loopingIndex;
-                triangles[triangleIndex++] = (i + 1) * radialResolution + loopingIndex;
+                triangles[triangleIndex++] = i * (radialResolution + 1) + j;
+                triangles[triangleIndex++] = i * (radialResolution + 1) + j + 1;
+                triangles[triangleIndex++] = (i + 1) * (radialResolution + 1) + j + 1;
 
                 // The second quad.
-                triangles[triangleIndex++] = i * radialResolution + j;
-                triangles[triangleIndex++] = (i + 1) * radialResolution + loopingIndex;
-                triangles[triangleIndex++] = (i + 1) * radialResolution + j;
+                triangles[triangleIndex++] = i * (radialResolution + 1) + j;
+                triangles[triangleIndex++] = (i + 1) * (radialResolution + 1) + j + 1;
+                triangles[triangleIndex++] = (i + 1) * (radialResolution + 1) + j;
             }
 		}
 	}
@@ -182,7 +182,7 @@ public class WireRenderer : MonoBehaviour {
 
         // Calculate the uv coordinates based on how far along the wire it has gone.
         // The u coordinate increases linearly along the wire.
-        uv = new Vector2[points.Length * radialResolution];
+        uv = new Vector2[points.Length * (radialResolution + 1)];
         float accumulatedRelativeLength = 0.0f;
 
         SetUvForRing(0, uv, 0.0f);
@@ -194,8 +194,8 @@ public class WireRenderer : MonoBehaviour {
 	}
 
     private void SetUvForRing(int ringIndex, Vector2[] uv, float u) {
-        for (int i = 0; i < radialResolution; ++i) {
-            uv[ringIndex * radialResolution + i] = new Vector2(u, (float) i / (radialResolution - 1));
+        for (int i = 0; i <= radialResolution; ++i) {
+            uv[ringIndex * (radialResolution + 1) + i] = new Vector2(u, (float) i / radialResolution);
 		}
 	}
 

@@ -103,4 +103,15 @@ public class Connector : MonoBehaviour {
 		yield return new WaitForSeconds(0.5f);
 		trigger.enabled = true;
 	}
+
+	// Returns the polarity of the slot where this connector is connected.
+	public int GetPolarity() {
+		if (meshRenderer.material.name.Contains(negativeMaterial.name)) {
+			return 1;
+		} else if (meshRenderer.material.name.Contains(positiveMaterial.name)) {
+			return -1;
+		} else {
+			return 0;
+		}
+	}
 }

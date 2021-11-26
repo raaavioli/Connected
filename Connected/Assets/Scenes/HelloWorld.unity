@@ -2169,5 +2169,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: wood_workbench
       objectReference: {fileID: 0}
+    - target: {fileID: 4061687054883999745, guid: b642f9099e7fae94b8720919044ddcc8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b642f9099e7fae94b8720919044ddcc8, type: 3}
