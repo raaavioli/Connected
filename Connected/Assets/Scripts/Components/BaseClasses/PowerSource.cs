@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class PowerSource : GeneralComponent {
-    public float voltage { get; protected set; }
+    [SerializeField]
+    private float voltage;
 
     private void Start()
     {

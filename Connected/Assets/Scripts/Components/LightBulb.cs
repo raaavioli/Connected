@@ -9,12 +9,13 @@ public class LightBulb : GeneralComponent
     [SerializeField]
     private float maximumPower = 10f;
     [SerializeField]
-    private float Ohm = 5f;
+    private float ohm = 5f;
+
     private Dimming dimming;
 
 	private void Awake() {
         dimming = GetComponent<Dimming>();
-        resistance = Ohm;
+        resistance = ohm;
     }
 
 	void Update() {
