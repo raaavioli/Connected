@@ -83,6 +83,8 @@ public class Connector : MonoBehaviour {
 
 			meshRenderer.material = positive ? positiveMaterial : negativeMaterial;
 			associatedWire.RecolorWire(this, positive ? positiveColor : negativeColor);
+
+			CircuitManager.TraceCircuits();
 		}
 	}
 
@@ -93,6 +95,8 @@ public class Connector : MonoBehaviour {
 
 		meshRenderer.material = neutralMaterial;
 		associatedWire.RecolorWire(this, neutralColor);
+
+		CircuitManager.TraceCircuits();
 	}
 
 	private bool IsHeld() {

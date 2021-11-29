@@ -12,14 +12,6 @@ public class CircuitManager : MonoBehaviour
         else Destroy(this);
     }
 
-    private void Update()
-    {
-        // Should be called on change in circuit. 
-        // IE new wire/component connected or lightswitch flicked or whatever
-
-        TraceCircuits();
-    }
-
     public static void AddPowerSource(Battery battery)
     {
         if (instance != null) {
@@ -34,10 +26,10 @@ public class CircuitManager : MonoBehaviour
         }
     }
 
-    private void TraceCircuits() {
+    public static void TraceCircuits() {
         List<Battery> foundPowerSources = new List<Battery>();
         
-        foreach (Battery battery in batteries) {
+        foreach (Battery battery in instance.batteries) {
             if (foundPowerSources.Contains(battery)) {
                 continue;
             } else {
