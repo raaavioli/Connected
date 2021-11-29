@@ -33,22 +33,29 @@ public class Battery : GeneralComponent {
         {
             resistanceSum += nextComponent.resistance;
 
+            if (!CheckConnection(nextComponent.positive)) break;
+
             if (nextComponent.GetType() == typeof(Battery)) {
                 Battery foundPowerSource = (Battery)nextComponent;
                 foundPowerSources.Add(foundPowerSource);
                 voltageSum += foundPowerSource.voltage;
-            }
+            } else if (nextComponent.GetType() == typeof(Splitter)) {
+                float splitterResistance;
+                Splitter foundSplitter = (Splitter)nextComponent;
 
-            if (CheckConnection(nextComponent.positive)) {
-                nextComponent = nextComponent.positive.positive;
-            } else {
-                break;
+                (splitterResistance, nextComponent) = foundSplitter.CheckSplitter();
+                if (splitterResistance == 0 && nextComponent == null) { // if splitter wasn't closed
+                    break;
+                } else  {
+                    resistanceSum += splitterResistance;
+                }
             }
+            nextComponent = nextComponent.positive.positive;
         }
         voltageSum += this.voltage; resistanceSum += this.resistance;
         if (nextComponent == this) {
             ResolveCircuit(resistanceSum, voltageSum);
-        }
+        } else Debug.Log("Broken");
 
         return foundPowerSources;
     }

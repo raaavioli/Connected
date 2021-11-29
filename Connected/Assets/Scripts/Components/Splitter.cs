@@ -29,6 +29,7 @@ public class Splitter : GeneralComponent
         ratio = resistance1 / (resistance1+resistance2);
 
         return (totRes, combiner1);
+
     }
     //nextComponent is the first component AFTER the splitter.
     private (float, GeneralComponent) CheckSplitWire(GeneralComponent nextComponent)
