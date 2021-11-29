@@ -21,6 +21,8 @@ public class Splitter : GeneralComponent
 
         // If combiner1 isnt null and combiner2 is null it will catch after or sign.
         if (combiner1 == null || (combiner1 != combiner2)) {
+            // TODO: Give user appropriate error message. 
+            // Here it is due to a single splitter not matching up with a single combiner
             return (0, null);
         }
 
