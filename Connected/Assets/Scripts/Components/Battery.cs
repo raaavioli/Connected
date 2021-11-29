@@ -61,9 +61,14 @@ public class Battery : GeneralComponent {
         GeneralComponent nextComponent = this.positive.positive;
 
         while (nextComponent != this) {
-            nextComponent.current = current;
-            nextComponent.positive.ShowCurrent();
-            nextComponent = nextComponent.positive.positive;
+            if (nextComponent.GetType() == typeof(Splitter)) {
+                Splitter foundSplitter = (Splitter)nextComponent;
+                nextComponent = foundSplitter.ResolveSplitter(current);
+            } else {
+                nextComponent.current = current;
+                nextComponent = nextComponent.positive.positive;
+                nextComponent.positive.ShowCurrent();
+            }
         }
     }
 }

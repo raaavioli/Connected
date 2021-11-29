@@ -24,13 +24,13 @@ public class Splitter : GeneralComponent
             return (0, null);
         }
 
-        // Actual formula
+        // From actual formula
         totRes = 1/((1/resistance1) + (1/resistance2));
         ratio = resistance1 / (resistance1+resistance2);
 
         return (totRes, combiner1);
     }
-
+    //nextComponent is the first component AFTER the splitter.
     private (float, GeneralComponent) CheckSplitWire(GeneralComponent nextComponent)
     {
         float res, resistanceSum = 0.0f;
@@ -51,5 +51,28 @@ public class Splitter : GeneralComponent
             }
         }
         return (resistanceSum, nextComponent);
+    }
+    public GeneralComponent ResolveSplitter(float current)
+    {
+        // No controls made due to them being made in the check.
+        GeneralComponent  returnComponent = ResolveSplitWire(current*ratio, positive.positive);
+        returnComponent = ResolveSplitWire(current*(1-current), secondPositive.positive);
+
+        // Returns what comes after the combiner.
+        returnComponent.positive.ShowCurrent();
+        return returnComponent.positive.positive;
+    }
+    private GeneralComponent ResolveSplitWire(float current, GeneralComponent nextComponent) 
+    {
+        while(nextComponent.GetType() != typeof(Combiner)) {
+            if (nextComponent.GetType() == typeof(Splitter)) {
+                nextComponent = ResolveSplitter(current);
+            } else {
+                nextComponent.current = current;
+                nextComponent.positive.ShowCurrent();
+                nextComponent = nextComponent.positive.positive;
+            }
+        }
+        return nextComponent;
     }
 }
