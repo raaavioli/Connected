@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class LightBulb : GeneralComponent 
 {
-    private float requiredPower;
+    [SerializeField]
+    private float requiredPower = 1.0f;
+    [SerializeField]
+    private float maximumPower = 10f;
+    [SerializeField]
+    private float ohm = 5f;
 
-    public LightBulb(float ohm, float watt)
-    {
+    private Dimming dimming;
+
+	private void Awake() {
+        dimming = GetComponent<Dimming>();
         resistance = ohm;
-        requiredPower = watt;
     }
 
-    void Update() {
-        //TODO: Animate if  watt is high enough
+	void Update() {
+        float power = CalculatePower();
+        if (power < requiredPower)
+            power = 0;
+        // TODO: Break lamp if power > maximumPower
+        dimming.SetIntensity(power / maximumPower);
     }
 }
