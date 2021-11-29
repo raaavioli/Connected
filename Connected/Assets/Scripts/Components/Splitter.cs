@@ -44,6 +44,9 @@ public class Splitter : GeneralComponent
                 Splitter splitter = (Splitter)nextComponent;
                 (res, nextComponent) = splitter.CheckSplitter();
                 resistanceSum += res;
+            } else if(nextComponent.GetType() == typeof(Battery)) {
+                //TODO: Add appropriate error message.
+                return (0, null);
             } else if(nextComponent == null) {
                 return (0, null);
             } else {

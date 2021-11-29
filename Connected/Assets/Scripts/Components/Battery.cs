@@ -49,14 +49,16 @@ public class Battery : GeneralComponent {
                 } else  {
                     resistanceSum += splitterResistance;
                 }
+            } else if (nextComponent.GetType() == typeof(Combiner)) {
+                //TODO: Add appropriate error message.
+                break;
             }
             nextComponent = nextComponent.positive.positive;
         }
         voltageSum += this.voltage; resistanceSum += this.resistance;
         if (nextComponent == this) {
             ResolveCircuit(resistanceSum, voltageSum);
-        } else Debug.Log("Broken");
-
+        }
         return foundPowerSources;
     }
 
