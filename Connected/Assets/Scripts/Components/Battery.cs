@@ -29,7 +29,7 @@ public class Battery : GeneralComponent {
             nextComponent = positive.positive;
         }
 
-        while (nextComponent != this)
+        while (nextComponent != this && nextComponent != null)
         {
             resistanceSum += nextComponent.resistance;
 
@@ -44,12 +44,12 @@ public class Battery : GeneralComponent {
                 Splitter foundSplitter = (Splitter)nextComponent;
 
                 (splitterResistance, nextComponent) = foundSplitter.CheckSplitter();
-                if (splitterResistance == 0 && nextComponent == null) { // if splitter wasn't closed
+                if (splitterResistance == 0 && nextComponent == null) { // if splitter wasn't closed correctly
                     break;
                 } else  {
                     resistanceSum += splitterResistance;
                 }
-            } else if (nextComponent.GetType() == typeof(Combiner)) {
+            } else if (nextComponent.GetType() == typeof(Combiner)) { // if battery is inside of a splitter-combiner.
                 //TODO: Add appropriate error message.
                 break;
             }

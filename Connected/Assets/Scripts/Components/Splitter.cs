@@ -21,33 +21,33 @@ public class Splitter : GeneralComponent
 
         // If combiner1 isnt null and combiner2 is null it will catch after or sign.
         if (combiner1 == null || (combiner1 != combiner2)) {
-            // TODO: Give user appropriate error message. 
-            // Here it is due to a single splitter not matching up with a single combiner
+            // TODO: Add appropriate error message
             return (0, null);
         }
 
-        // From actual formula
-        totRes = 1/((1/resistance1) + (1/resistance2));
+        // From an actual formula
+        totRes = 1 / ((1/resistance1) + (1/resistance2));
         ratio = resistance1 / (resistance1+resistance2);
 
         return (totRes, combiner1);
 
     }
-    //nextComponent is the first component AFTER the splitter.
+    // nextComponent is initially the first component AFTER the splitter.
+    // Stuff went wrong when (0, null) is returned.
     private (float, GeneralComponent) CheckSplitWire(GeneralComponent nextComponent)
     {
         float res, resistanceSum = 0.0f;
-        while(nextComponent.GetType() != typeof(Combiner)) 
+        while (nextComponent.GetType() != typeof(Combiner))
         {
-            if(nextComponent.GetType() == typeof(Splitter)) {
+            if (nextComponent.GetType() == typeof(Splitter)) {
                 // Recasting the splitter to use CheckSplitter()
                 Splitter splitter = (Splitter)nextComponent;
                 (res, nextComponent) = splitter.CheckSplitter();
                 resistanceSum += res;
-            } else if(nextComponent.GetType() == typeof(Battery)) {
+            } else if (nextComponent.GetType() == typeof(Battery)) {
                 //TODO: Add appropriate error message.
                 return (0, null);
-            } else if(nextComponent == null) {
+            } else if (nextComponent == null) {
                 return (0, null);
             } else {
                 resistanceSum += nextComponent.resistance;
@@ -61,8 +61,8 @@ public class Splitter : GeneralComponent
     public GeneralComponent ResolveSplitter(float current)
     {
         // No controls made due to them being made in the check.
-        GeneralComponent  returnComponent = ResolveSplitWire(current*ratio, positive.positive);
-        returnComponent = ResolveSplitWire(current*(1-current), secondPositive.positive);
+        GeneralComponent returnComponent = ResolveSplitWire(current*ratio, positive.positive);
+        returnComponent = ResolveSplitWire(current*(1-ratio), secondPositive.positive);
 
         // Returns what comes after the combiner.
         returnComponent.positive.ShowCurrent();
@@ -70,7 +70,7 @@ public class Splitter : GeneralComponent
     }
     private GeneralComponent ResolveSplitWire(float current, GeneralComponent nextComponent) 
     {
-        while(nextComponent.GetType() != typeof(Combiner)) {
+        while (nextComponent.GetType() != typeof(Combiner)) {
             if (nextComponent.GetType() == typeof(Splitter)) {
                 nextComponent = ResolveSplitter(current);
             } else {
