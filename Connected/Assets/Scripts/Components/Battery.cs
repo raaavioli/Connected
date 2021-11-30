@@ -6,6 +6,8 @@ public class Battery : GeneralComponent {
     [SerializeField]
     private float voltage;
 
+    private int MAX_CIRCUIT_SIZE = 1000;
+
     private void Start()
     {
         CircuitManager.AddPowerSource(this);
@@ -72,7 +74,7 @@ public class Battery : GeneralComponent {
     private void ResetCircuit() { // Assumes broken circuit, trace both ways to resest currents to 0 and hide current shader in wires.
         // Trace in positive direction.
         GeneralComponent nextComponent = this;
-        while (nextComponent != null) {
+        for (int i = 0; i < MAX_CIRCUIT_SIZE; ++i) {
             // Reset current.
             nextComponent.current = 0.0f;
             
@@ -90,7 +92,7 @@ public class Battery : GeneralComponent {
 
         // Trace in negative direction.
         nextComponent = this;
-        while (nextComponent != null) {
+        for (int i = 0; i < MAX_CIRCUIT_SIZE; ++i) {
             // Reset current.
             nextComponent.current = 0.0f;
 

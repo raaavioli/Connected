@@ -147,6 +147,7 @@ MonoBehaviour:
   positiveColor: {r: 1, g: 0, b: 0, a: 1}
   negativeColor: {r: 0, g: 0, b: 0, a: 1}
   neutralColor: {r: 1, g: 1, b: 1, a: 1}
+  _associatedWire: {fileID: 4651223236595471126}
 --- !u!114 &7874701828570862095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,6 +401,7 @@ MonoBehaviour:
   positiveColor: {r: 1, g: 0, b: 0, a: 1}
   negativeColor: {r: 0, g: 0, b: 0, a: 1}
   neutralColor: {r: 1, g: 1, b: 1, a: 1}
+  _associatedWire: {fileID: 4651223236595471126}
 --- !u!114 &7044312372169333486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -621,8 +623,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 4651223236001153197}
   endPoint: {fileID: 4651223235265839878}
-  numMiddlePoints: 50
-  numIterations: 40
+  numMiddlePoints: 10
+  numIterations: 20
   stickExtensionModifier: 1
   drawGizmos: 0
 --- !u!114 &4651223236595471126

@@ -18,7 +18,18 @@ public class Connector : MonoBehaviour {
 	[SerializeField]
 	private Color neutralColor;
 
-	public Wire associatedWire { get; private set; }
+	[SerializeField]
+	private Wire _associatedWire;
+	public Wire associatedWire { 
+		get
+        {
+			return _associatedWire;
+        }
+		private set
+        {
+			_associatedWire = value;
+        }
+	}
 
     private MeshRenderer meshRenderer;
 	private Interactable interactable;
@@ -42,15 +53,24 @@ public class Connector : MonoBehaviour {
 		interactable.onAttachedToHand -= GrabDisconnect;
 	}
 
+	private void OnDestroy()
+    {
+		if (connectedSlot != null)
+		{
+			DisconnectionActions();
+		}
+
+		if (associatedWire != null)
+        {
+			Destroy(associatedWire.gameObject);
+		}
+	}
+
 	private void GrabDisconnect(Hand hand) {
 		if (connectedSlot != null) {
 			DisconnectionActions();
 		}
 	}
-
-	private void Start() {
-        associatedWire = transform.parent.GetComponent<Wire>();
-    }
 
 	private void Update() {
 		if (!IsHeld() && connectedSlot == null) {
@@ -91,10 +111,17 @@ public class Connector : MonoBehaviour {
 	private void DisconnectionActions() {
 		connectedSlot.Disconnect();
 		connectedSlot = null;
-		StartCoroutine(DelayEnableTrigger());
 
-		meshRenderer.material = neutralMaterial;
-		associatedWire.RecolorWire(this, neutralColor);
+		if (meshRenderer != null)
+        {
+			meshRenderer.material = neutralMaterial;
+        }
+
+		if (associatedWire != null)
+        {
+			associatedWire.RecolorWire(this, neutralColor);
+			StartCoroutine(DelayEnableTrigger());
+		}
 
 		CircuitManager.TraceCircuits();
 	}
