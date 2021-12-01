@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 686947757083715004}
   - component: {fileID: 4478650390890867225}
   - component: {fileID: 1856516058524294867}
+  - component: {fileID: 5980096104296455463}
   m_Layer: 0
   m_Name: SplitterPrefab
   m_TagString: Untagged
@@ -84,6 +85,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5980096104296455463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199099517952966406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6560520afc34a9ba727c40b4f5046f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3817843712942660615
 GameObject:
   m_ObjectHideFlags: 0
