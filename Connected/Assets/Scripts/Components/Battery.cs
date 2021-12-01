@@ -33,17 +33,28 @@ public class Battery : GeneralComponent {
         {
             resistanceSum += nextComponent.resistance;
 
+            if (!CheckConnection(nextComponent.positive)) break;
+
             if (nextComponent.GetType() == typeof(Battery)) {
                 Battery foundPowerSource = (Battery)nextComponent;
                 foundPowerSources.Add(foundPowerSource);
                 voltageSum += foundPowerSource.voltage;
-            }
+            } else if (nextComponent.GetType() == typeof(Splitter)) {
+                float splitterResistance;
+                Splitter foundSplitter = (Splitter)nextComponent;
 
-            if (CheckConnection(nextComponent.positive)) {
-                nextComponent = nextComponent.positive.positive;
-            } else {
+                (splitterResistance, nextComponent) = foundSplitter.CheckSplitter();
+                if (splitterResistance == 0 && nextComponent == null) { // if splitter wasn't closed correctly
+                    break;
+                } else  {
+                    resistanceSum += splitterResistance;
+                }
+            } else if (nextComponent.GetType() == typeof(Combiner)) { // if battery is inside of a splitter-combiner.
+                // Temporary error message
+                Debug.Log("Battery not allowed to be coupled inside of a splitter-combiner.");
                 break;
             }
+            nextComponent = nextComponent.positive.positive;
         }
         voltageSum += this.voltage; resistanceSum += this.resistance;
         if (nextComponent == this) {
@@ -63,45 +74,62 @@ public class Battery : GeneralComponent {
         GeneralComponent nextComponent = this.positive.positive;
 
         while (nextComponent != this) {
-            nextComponent.current = current;
-            nextComponent.positive.ShowCurrent();
-            nextComponent = nextComponent.positive.positive;
+            if (nextComponent.GetType() == typeof(Splitter)) {
+                Splitter foundSplitter = (Splitter)nextComponent;
+                nextComponent = foundSplitter.ResolveSplitter(current);
+            } else {
+                nextComponent.current = current;
+                nextComponent = nextComponent.positive.positive;
+                nextComponent.positive.ShowCurrent();
+            }
         }
     }
 
     private void ResetCircuit() { // Assumes broken circuit, trace both ways to resest currents to 0 and hide current shader in wires.
-        // Trace in positive direction.
         GeneralComponent nextComponent = this;
-        while (nextComponent != null) {
-            // Reset current.
-            nextComponent.current = 0.0f;
-            
-            if (nextComponent.positive != null) { // If there is a wire connected.
+        while (nextComponent != null)
+        { // positive direction
+            this.current = 0.0f;
+
+            if (nextComponent.positive != null) {
                 nextComponent.positive.HideCurrent();
-                if (nextComponent.positive.positive != null) { // If the wire is connected to an additional component.
-                    nextComponent = nextComponent.positive.positive;
-				} else { // There was no next component, circuit was broken here.
-                    break;
-				}
-            } else { // There was no next wire, circuit was broken here.
-                break;
-			}
-        }
+            }
 
-        // Trace in negative direction.
-        nextComponent = this;
-        while (nextComponent != null) {
-            // Reset current.
-            nextComponent.current = 0.0f;
-
-            if (nextComponent.negative != null) { // If there is a wire connected.
-                nextComponent.negative.HideCurrent();
-                if (nextComponent.negative.negative != null) { // If the wire is connected to an additional component.
-                    nextComponent = nextComponent.negative.negative;
-                } else { // There was no next component, circuit was broken here.
+            if (nextComponent.GetType() == typeof(Splitter)) {  //  Go into splitter logic.
+                Splitter foundSplitter = (Splitter)nextComponent;
+                nextComponent = foundSplitter.ResetSplitter();
+                if (nextComponent == null) { // If splitter found the break
                     break;
                 }
-            } else { // There was no next wire, circuit was broken here.
+            } 
+
+            if (CheckConnection(nextComponent.positive)) {
+                nextComponent = nextComponent.positive.positive;
+            } else { // No component existed on the other end of the wire.
+                break;
+            }
+        }
+
+        nextComponent = this;
+        while (nextComponent != null) 
+        { // negative direction
+            nextComponent.current = 0.0f;
+
+            if (nextComponent.negative != null) {
+                nextComponent.negative.HideCurrent();
+            }
+
+            if (nextComponent.GetType() == typeof(Combiner)) {  //  Go into splitter logic.
+                Combiner foundCombiner = (Combiner)nextComponent;
+                nextComponent = foundSplitter.ResetCombiner();
+                if (nextComponent == null) { // If Combiner found the break
+                    break;
+                }
+            }
+
+            if (CheckConnection(nextComponent.negative, false)) {
+                nextComponent = nextComponent.negative.negative;
+            } else { // No component existed on the other end of the wire.
                 break;
             }
         }
