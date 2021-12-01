@@ -50,7 +50,8 @@ public class Battery : GeneralComponent {
                     resistanceSum += splitterResistance;
                 }
             } else if (nextComponent.GetType() == typeof(Combiner)) { // if battery is inside of a splitter-combiner.
-                //TODO: Add appropriate error message.
+                // Temporary error message
+                Debug.Log("Battery not allowed to be coupled inside of a splitter-combiner.");
                 break;
             }
             nextComponent = nextComponent.positive.positive;

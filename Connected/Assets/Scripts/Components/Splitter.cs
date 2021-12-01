@@ -6,6 +6,7 @@ public class Splitter : GeneralComponent
 {
     private float ratio;
     public Wire secondPositive { get; set; }
+    private static const (float, GeneralComponent) errorTuple = (0, null);
 
     public (float, GeneralComponent) CheckSplitter()
     {
@@ -21,8 +22,9 @@ public class Splitter : GeneralComponent
 
         // If combiner1 isnt null and combiner2 is null it will catch after or sign.
         if (combiner1 == null || (combiner1 != combiner2)) {
-            // TODO: Add appropriate error message
-            return (0, null);
+            // Temporary error message
+            Debug.Log("Splitter did not meet combiner correctly.");
+            return errorTuple;
         }
 
         // From an actual formula
@@ -33,7 +35,6 @@ public class Splitter : GeneralComponent
 
     }
     // nextComponent is initially the first component AFTER the splitter.
-    // Stuff went wrong when (0, null) is returned.
     private (float, GeneralComponent) CheckSplitWire(GeneralComponent nextComponent)
     {
         float res, resistanceSum = 0.0f;
@@ -45,10 +46,11 @@ public class Splitter : GeneralComponent
                 (res, nextComponent) = splitter.CheckSplitter();
                 resistanceSum += res;
             } else if (nextComponent.GetType() == typeof(Battery)) {
-                //TODO: Add appropriate error message.
-                return (0, null);
+            // Temporary error message
+            Debug.Log("Battery not allowed to be coupled inside of a splitter-combiner.");
+                return errorTuple;
             } else if (nextComponent == null) {
-                return (0, null);
+                return errorTuple;
             } else {
                 resistanceSum += nextComponent.resistance;
                 if (CheckConnection(nextComponent.positive)) {
