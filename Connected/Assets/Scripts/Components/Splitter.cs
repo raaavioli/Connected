@@ -83,4 +83,57 @@ public class Splitter : GeneralComponent
         }
         return nextComponent;
     }
+
+    public GeneralComponent ResetSplitter()
+    {
+        ratio = 0.0f;
+
+        GeneralComponent firstComponent, secondComponent;
+        if (positive != null) {
+            positive.HideCurrent();
+            firstComponent = ResetSplitWire(positive);
+        } else {
+            firstComponent = null;
+        }
+        if (secondPositive != null) {
+            secondComponent.HideCurrent();
+            secondComponent = ResetSplitWire(secondPositive);
+        } else {
+            secondComponent = null;
+        }
+        
+        if(firstComponent == secondComponent) { // Assumes only one break per reset call.
+            return firstComponent
+        } else {
+            return null;
+        }
+    }
+
+    private GeneralComponent ResetSplitWire(Wire positive)
+    {
+        GeneralComponent nextComponent
+        nextComponent = this;
+
+        while (nextComponent != null) 
+        {
+            nextComponent.current = 0.0f;
+
+            if (nextComponent.positive != null) {
+                nextComponent.positive.HideCurrent();
+            }
+            if (CheckConnection(nextComponent.positive)) {
+                nextComponent = nextComponent.positive.positive;
+            } else {
+                return null;
+            }
+
+            if (nextComponent.GetType() == typeof(Splitter)) {
+                Splitter splitter = (Splitter)nextComponent;
+                nextComponent = splitter.ResetSplitter();
+            } else if (nextComponent.GetType() == typeof(Combiner)) {
+                return nextComponent;
+            } 
+        }
+        return nextComponent;
+    }
 }
