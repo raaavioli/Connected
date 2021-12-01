@@ -85,7 +85,8 @@ public class Battery : GeneralComponent {
         }
     }
 
-    private void ResetCircuit() { // Assumes broken circuit, trace both ways to resest currents to 0 and hide current shader in wires.
+    private void ResetCircuit() 
+    { // Assumes broken circuit, trace both ways to resest currents to 0 and hide current shader in wires.
         GeneralComponent nextComponent = this;
         while (nextComponent != null)
         { // positive direction
