@@ -11,10 +11,10 @@ public abstract class GeneralComponent : MonoBehaviour {
     public static bool CheckConnection(Wire wire, bool positiveDirection = true) {
         if (wire == null) {
             return false;
-        } else if (positiveDirecion) {
-            else return wire.positive != null;
+        } else if (positiveDirection) {
+            return wire.positive != null;
         } else {
-            else return wire.negative != null;
+            return wire.negative != null;
         }
     }
 

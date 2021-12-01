@@ -11,12 +11,12 @@ public class Combiner : GeneralComponent
             GeneralComponent firstComponent, secondComponent;
             if (negative != null) {
                 negative.HideCurrent();
-                firstComponent = ResetCombWire(negative)
+                firstComponent = ResetCombWire(negative);
             } else {
                 firstComponent = null;
             }
             if (secondNegative != null) {
-                secondComponent.HideCurrent();
+                secondNegative.HideCurrent();
                 secondComponent = ResetCombWire(secondNegative);
             } else {
                 secondComponent = null;
@@ -28,9 +28,9 @@ public class Combiner : GeneralComponent
                 return null;
             }
         }
-        private GeneralComponent ResetCombWire(wire negative) 
+        private GeneralComponent ResetCombWire(Wire negative) 
         {
-        GeneralComponent nextComponent
+        GeneralComponent nextComponent;
         nextComponent = this;
 
         while (nextComponent != null) 

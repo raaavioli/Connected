@@ -6,7 +6,7 @@ public class Splitter : GeneralComponent
 {
     private float ratio;
     public Wire secondPositive { get; set; }
-    private static const (float, GeneralComponent) errorTuple = (0, null);
+    private (float, GeneralComponent) errorTuple = (0, null);
 
     public (float, GeneralComponent) CheckSplitter()
     {
@@ -96,14 +96,14 @@ public class Splitter : GeneralComponent
             firstComponent = null;
         }
         if (secondPositive != null) {
-            secondComponent.HideCurrent();
+            secondPositive.HideCurrent();
             secondComponent = ResetSplitWire(secondPositive);
         } else {
             secondComponent = null;
         }
         
         if(firstComponent == secondComponent) { // Assumes only one break per reset call.
-            return firstComponent
+            return firstComponent;
         } else {
             return null;
         }
@@ -111,7 +111,7 @@ public class Splitter : GeneralComponent
 
     private GeneralComponent ResetSplitWire(Wire positive)
     {
-        GeneralComponent nextComponent
+        GeneralComponent nextComponent;
         nextComponent = this;
 
         while (nextComponent != null) 

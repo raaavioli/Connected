@@ -122,7 +122,7 @@ public class Battery : GeneralComponent {
 
             if (nextComponent.GetType() == typeof(Combiner)) {  //  Go into splitter logic.
                 Combiner foundCombiner = (Combiner)nextComponent;
-                nextComponent = foundSplitter.ResetCombiner();
+                nextComponent = foundCombiner.ResetCombiner();
                 if (nextComponent == null) { // If Combiner found the break
                     break;
                 }
