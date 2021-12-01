@@ -20,12 +20,16 @@ public class Wire : MonoBehaviour {
 
 	private void Update() {
 		if (positive == null || negative == null) {
-			wireRenderer.connected = 0;
+			HideCurrent();
 		}
 	}
 
 	public void ShowCurrent() {
 		wireRenderer.connected = CalculateCurrentDirection();
+	}
+
+	public void HideCurrent() {
+		wireRenderer.connected = 0;
 	}
 
 	public void RecolorWire(Connector connector, Color color) {

@@ -40,7 +40,7 @@ public class Battery : GeneralComponent {
             }
 
             if (CheckConnection(nextComponent.positive)) {
-                nextComponent = positive.positive;
+                nextComponent = nextComponent.positive.positive;
             } else {
                 break;
             }
