@@ -4,7 +4,12 @@ blogData =
       {
         title: "Initial concept idea created",
         images: ["images/concept.png"],
-        text: "The concept idea, as the image may hint at, is to make an electrical circuitry simulation. While the image is very basic, it shows the general gist of what we want to capture, placing and connecting components to make circuits. What the images <i>doesn't</i> reveal is that we want to do it in VR, to allow proper 3D exploration, as you would do in reality. Also, while not yet fully determined, it would be cool to have a background react to failures or successes by the user. We'll start off humbly, by implementing a 'sandbox' environment, with the possibility of gamifying it with solving problems in the future."
+        text: "The concept idea, as the image may hint at, is to make an electrical circuitry simulation. While the image is very basic, it shows the general gist of what we want to capture, placing and connecting components to make circuits. What the images <i>doesn't</i> reveal is that we want to do it in VR, to allow proper 3D exploration, as you would do in reality. Also, while not yet fully determined, it would be cool to have a background react to failures or successes by the user. We'll  start off humbly, by implementing a 'sandbox' environment, with the possibility of gamifying it with solving problems in the future."
+      },
+      {
+        title: "Light bulbs added",
+        images: ["images/lightbulbs.png"],
+        text: "There are now light bulbs in the game which work as light sources in the environment. The idea is that the light bulbs will be powered by batteries through wires in circuits.</br></br>To get the light nice and glowing, a post processing bloom filter was applied to the whole scene which gives this intense glow around the filaments."
       },
       {
         title: "VR environment created",
@@ -12,9 +17,34 @@ blogData =
         text: "Using HTC Vive, Steam VR, and Unity with OpenXR, we now have a basic VR environment to work within. To our surprise, the libraries used for working with VR in Unity has already most of the things cut out for us. There are already components existing to make objects interactable with the VR controllers in a way that we want to do. One major thorn for us, is the fact that we need physical sensor stations to register the headset movement. Yet, because we don't expect to be moving around much, this might be a lesser issue than initially imagined.</br>The gif shows us interacting with a generic object. It is even throwable! It might be cool to explore throwing components away that the user doesn't want anymore."
       },
       {
+        title: "Workbenches added",
+        images: ["images/workbenches.png", "images/woodenworkbench.png", "images/metalworkbench.png"],
+        text: "Workbenches were created to have some for the player to work on their circuit. Workbenches are also meant to be used as storage, where the workbenches will provide items at the start of each round or when just playing the game. The workbenches have “tool markers” which are the orange/brown markers defining the area where an object would spawn. An orange area would mean that the object is available, and a brown area would mean that the object is missing or out of stock.</br></br>When creating the workbenches, we really wanted one of them to resemble those wooden crafting benches you see in any workshop, and the other to be a classic metallic workbench where you can store tools on the wall right behind it."
+      },
+      {
         title: "Simple electrical components added",
         images: ["images/knife-switch-model.png", "images/knife-switch-ref.png", "images/battery-model.png", "images/battery-ref.png"],
         text: "These two components for use on the electrical board have now been added. The battery is a C battery with a typical voltage of 1.5V and a storage capacity of up to 8000 mAh. A standard household light bulb requires 120V, so if we were to power one with typical C batteries, we would need to use 80 - this is why for the sake of convenience and simplicity, the model’s “voltage” can be adjusted in Unity, and the battery can be a representation of any other type of battery for the VR demonstrations.</br></br>The knife switch is often used in education due to the clarity of its design: it is very easy to see when the switch is on and when it is off, compared to e.g. a regular lightswitch. While this type of switch is no longer commonly used in real-life situations, it is very useful in scientific experiments such as the ones the students in grades 7-9 might be performing. This is why we have included it in the project, although we plan to also have other options such as a safety switch."
+      },
+      {
+        title: "Container and garbage collection added",
+        images: ["images/container.gif", "images/rustycontainer.png"],
+        text: "A container was created to allow the player to destroy items created that are no longer needed nor in use. When creating the container, we wanted it to appear old, and thus be covered with some rusty patches along with the green worn out color. The containers have a script to destroy any items thrown into them.</br></br>Notice also that we are being kind here, letting the player throw all garbage into the same bin. This should not be done IRL. Batteries and lamps go into different bins!"
+      },
+      {
+        title: "Wires, base plates and circuits added",
+        images: ["images/wirecircuit.gif", "images/wirecollision.png", "images/wireSimulated.gif"],
+        text: "From the start, the central concept of this project is circuits. At first we underestimated how much of a technical problem this would be. When we sat down to design the logic that would check if a circuit was closed and calculate the current, we realized that to make an entire circuit that allows for infinite complexity, we would have to solve the halting problem, which is famously undecidable. We simplified a bit and stuck to only serial circuits at the start, and that worked well! In order to make the components possible to connect together without causing too much confusion, we created plastic base plates with little rubber feet and slots for the wire connectors to go into. Then it came to the actual wires, having them flop around was important, but simulating those floppy physics as well as collisions, and dynamic mesh generation is quite a challenge. Then creating shaders for showing the polarity of the slots the wires are connected to, as well as showing the direction of the current inside, is quite complex as well. The end result is pretty satisfying, though!"
+      },
+      {
+        title: "Different kinds of switch models added",
+        images: ["images/newknifeswitch.png", "images/flipswitch.png"],
+        text: "There are many kinds of switches used in real-life electrical circuits and in everyday appliances such as ceiling lights. Therefore, we included a regular flip switch that is likely to be very recognisable to the students from commonplace lights at home. As mentioned in a previous post, the knife switch, while not found in most non-educational contexts, is often used in scientific demonstrations and experiments. By having both, we aim to represent these two contexts and highlight that different-looking tools and components can sometimes serve the same purpose. The knife switch in the newest version has been replaced with a double-sided model for no other reason than looking cooler."
+      },
+      {
+        title: "Radio and placeholder audio added",
+        images: ["images/connectedradio.png", "images/radio.png"],
+        text: "A radio was created to allow the player to interactively play music in the environment. The player is able to connect the radio into a circuit with a battery, select track/radio channel and change volume; like you would expect from a real radio!</br></br>The player can interactively change the volume, sound and plug in/out wires onto/from the device to enable/disable it. The main purpose of having a radio is to give the player some options for what audio to play, and also to serve as an easter egg, as you would not expect to be able to interactively change music in most games.</br></br>The radio may look old, but it works exceptionally well for its age!"
       },
       {
         title: "",
