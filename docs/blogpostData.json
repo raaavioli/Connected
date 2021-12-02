@@ -38,7 +38,7 @@ blogData =
       },
       {
         title: "Different kinds of switch models added",
-        images: ["images/newknifeswitch.png", "images/flipswitch.png"],
+        images: ["images/newswitches.png"],
         text: "There are many kinds of switches used in real-life electrical circuits and in everyday appliances such as ceiling lights. Therefore, we included a regular flip switch that is likely to be very recognisable to the students from commonplace lights at home. As mentioned in a previous post, the knife switch, while not found in most non-educational contexts, is often used in scientific demonstrations and experiments. By having both, we aim to represent these two contexts and highlight that different-looking tools and components can sometimes serve the same purpose. The knife switch in the newest version has been replaced with a double-sided model for no other reason than looking cooler."
       },
       {
