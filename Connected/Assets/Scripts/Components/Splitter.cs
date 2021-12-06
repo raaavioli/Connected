@@ -6,7 +6,7 @@ public class Splitter : GeneralComponent
 {
     private float ratio;
     public Wire secondPositive { get; set; }
-    private static const (float, GeneralComponent) errorTuple = (0, null);
+    private static readonly (float, GeneralComponent) errorTuple = (0, null);
 
     public (float, GeneralComponent) CheckSplitter()
     {
