@@ -6,6 +6,8 @@ public class Battery : GeneralComponent {
     [SerializeField]
     private float voltage;
 
+    private int MAX_CIRCUIT_SIZE = 1000;
+
     private void Start()
     {
         CircuitManager.AddPowerSource(this);
@@ -59,7 +61,10 @@ public class Battery : GeneralComponent {
         voltageSum += this.voltage; resistanceSum += this.resistance;
         if (nextComponent == this) {
             ResolveCircuit(resistanceSum, voltageSum);
-        }
+        } else {
+            ResetCircuit();
+		}
+
         return foundPowerSources;
     }
 
@@ -78,6 +83,44 @@ public class Battery : GeneralComponent {
                 nextComponent.current = current;
                 nextComponent = nextComponent.positive.positive;
                 nextComponent.positive.ShowCurrent();
+            }
+        }
+    }
+
+    private void ResetCircuit() { // Assumes broken circuit, trace both ways to resest currents to 0 and hide current shader in wires.
+        // Trace in positive direction.
+        GeneralComponent nextComponent = this;
+        for (int i = 0; i < MAX_CIRCUIT_SIZE; ++i) {
+            // Reset current.
+            nextComponent.current = 0.0f;
+            
+            if (nextComponent.positive != null) { // If there is a wire connected.
+                nextComponent.positive.HideCurrent();
+                if (nextComponent.positive.positive != null) { // If the wire is connected to an additional component.
+                    nextComponent = nextComponent.positive.positive;
+				} else { // There was no next component, circuit was broken here.
+                    break;
+				}
+            } else { // There was no next wire, circuit was broken here.
+                break;
+			}
+        }
+
+        // Trace in negative direction.
+        nextComponent = this;
+        for (int i = 0; i < MAX_CIRCUIT_SIZE; ++i) {
+            // Reset current.
+            nextComponent.current = 0.0f;
+
+            if (nextComponent.negative != null) { // If there is a wire connected.
+                nextComponent.negative.HideCurrent();
+                if (nextComponent.negative.negative != null) { // If the wire is connected to an additional component.
+                    nextComponent = nextComponent.negative.negative;
+                } else { // There was no next component, circuit was broken here.
+                    break;
+                }
+            } else { // There was no next wire, circuit was broken here.
+                break;
             }
         }
     }
