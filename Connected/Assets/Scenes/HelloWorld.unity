@@ -1430,6 +1430,12 @@ MonoBehaviour:
   SpawnWire:
     actionPath: /actions/default/in/SpawnWire
     needsReinit: 0
+  LeftHandPressed:
+    actionPath: /actions/default/in/LeftHandTrigger
+    needsReinit: 0
+  RightHandPressed:
+    actionPath: /actions/default/in/RightHandTrigger
+    needsReinit: 0
   wirePrefab: {fileID: 4651223236595471121, guid: 71f4a1d08bb81a1459953763dd9c7523, type: 3}
   player: {fileID: 900462443}
 --- !u!4 &1639026904
