@@ -12,6 +12,19 @@ public class Wire : MonoBehaviour {
 	private Connector startConnector;
 	private Connector endConnector;
 
+	private void OnDestroy()
+    {
+		if (startConnector != null)
+        {
+			Destroy(startConnector.gameObject);
+        }
+
+		if (endConnector != null)
+        {
+			Destroy(endConnector.gameObject);
+        }
+	}
+
 	private void Awake() {
 		wireRenderer = GetComponent<WireRenderer>();
 		startConnector = transform.Find("StartPoint").GetComponent<Connector>();
