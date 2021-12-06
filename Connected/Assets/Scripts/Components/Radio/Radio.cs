@@ -37,9 +37,9 @@ public class Radio : GeneralComponent
         volume = volumeWheel.GetValue01();
         audioSource.volume = volume;
 
-        Vector3 position = channelSlider.transform.position;
+        Vector3 position = channelSlider.transform.localPosition;
         position.x = -0.1f + channelWheel.GetValue01() * 0.2f;
-        channelSlider.transform.position = position;
+        channelSlider.transform.localPosition = position;
 
         if (CalculatePower() < MIN_POWER)
         {
