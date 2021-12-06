@@ -52,7 +52,7 @@
     {
       "name": "/actions/default/in/SpawnWire",
       "type": "boolean",
-      "requirement": "mandatory"
+      "requirement": "suggested"
     },
     {
       "name": "/actions/default/in/LeftHandTrigger",
