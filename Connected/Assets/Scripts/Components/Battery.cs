@@ -35,17 +35,28 @@ public class Battery : GeneralComponent {
         {
             resistanceSum += nextComponent.resistance;
 
+            if (!CheckConnection(nextComponent.positive)) break;
+
             if (nextComponent.GetType() == typeof(Battery)) {
                 Battery foundPowerSource = (Battery)nextComponent;
                 foundPowerSources.Add(foundPowerSource);
                 voltageSum += foundPowerSource.voltage;
-            }
+            } else if (nextComponent.GetType() == typeof(Splitter)) {
+                float splitterResistance;
+                Splitter foundSplitter = (Splitter)nextComponent;
 
-            if (CheckConnection(nextComponent.positive)) {
-                nextComponent = nextComponent.positive.positive;
-            } else {
+                (splitterResistance, nextComponent) = foundSplitter.CheckSplitter();
+                if (splitterResistance == 0 && nextComponent == null) { // if splitter wasn't closed correctly
+                    break;
+                } else  {
+                    resistanceSum += splitterResistance;
+                }
+            } else if (nextComponent.GetType() == typeof(Combiner)) { // if battery is inside of a splitter-combiner.
+                // Temporary error message
+                Debug.Log("Battery not allowed to be coupled inside of a splitter-combiner.");
                 break;
             }
+            nextComponent = nextComponent.positive.positive;
         }
         voltageSum += this.voltage; resistanceSum += this.resistance;
         if (nextComponent == this) {
@@ -65,9 +76,14 @@ public class Battery : GeneralComponent {
         GeneralComponent nextComponent = this.positive.positive;
 
         while (nextComponent != this) {
-            nextComponent.current = current;
-            nextComponent.positive.ShowCurrent();
-            nextComponent = nextComponent.positive.positive;
+            if (nextComponent.GetType() == typeof(Splitter)) {
+                Splitter foundSplitter = (Splitter)nextComponent;
+                nextComponent = foundSplitter.ResolveSplitter(current);
+            } else {
+                nextComponent.current = current;
+                nextComponent = nextComponent.positive.positive;
+                nextComponent.positive.ShowCurrent();
+            }
         }
     }
 
