@@ -90,7 +90,7 @@ public class Battery : GeneralComponent {
         GeneralComponent nextComponent = this;
         while (nextComponent != null)
         { // positive direction
-            this.current = 0.0f;
+            nextComponent.current = 0.0f;
 
             if (nextComponent.positive != null) {
                 nextComponent.positive.HideCurrent();
