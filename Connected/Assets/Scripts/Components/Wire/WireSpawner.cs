@@ -28,6 +28,11 @@ public class WireSpawner : MonoBehaviour
 
     private void Update()
 	{
+        if (player == null)
+        {
+            Debug.LogWarning("WireSpawner needs a non-null reference to the player in the scene.");
+		}
+
         bool leftHandFree = player.leftHand.currentAttachedObject == null;
         bool rightHandFree = player.rightHand.currentAttachedObject == null;
 
