@@ -28,6 +28,11 @@ public class WireSpawner : MonoBehaviour
 
     private void Update()
 	{
+        if (player == null)
+        {
+            Debug.LogWarning("WireSpawner needs a non-null reference to the player in the scene.");
+		}
+
         bool leftHandFree = player.leftHand.currentAttachedObject == null;
         bool rightHandFree = player.rightHand.currentAttachedObject == null;
 
@@ -37,8 +42,10 @@ public class WireSpawner : MonoBehaviour
             GameObject startConnector = wire.transform.GetChild(0).gameObject;
             GameObject endConnector = wire.transform.GetChild(1).gameObject;
 
-            player.leftHand.AttachObject(startConnector, GrabTypes.Pinch);
-            player.rightHand.AttachObject(endConnector, GrabTypes.Pinch);
+            Hand.AttachmentFlags flags = startConnector.GetComponent<Throwable>().attachmentFlags;
+
+            player.leftHand.AttachObject(startConnector, GrabTypes.Pinch, flags, wire.transform);
+            player.rightHand.AttachObject(endConnector, GrabTypes.Pinch, flags, wire.transform);
         }
     }
 
