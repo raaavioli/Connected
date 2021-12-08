@@ -55,8 +55,8 @@ public class Radio : GeneralComponent
     {
         float value = channelWheel.GetValue01();
         // if value = 1 exactly, then value * channelSounds.Length is out of bounds.
-        if (value == 1)
-            value -= float.Epsilon;
+        if (value >= 1)
+            value = 1 - float.Epsilon;
         return (uint)(value * channelSounds.Length);
     }
 

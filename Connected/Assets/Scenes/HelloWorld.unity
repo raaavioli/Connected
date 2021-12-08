@@ -1152,6 +1152,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 518079617, guid: 04f8371a6b08ade4283a6c55f189f889, type: 3}
+      propertyPath: startAngle
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 2034533756, guid: 04f8371a6b08ade4283a6c55f189f889, type: 3}
+      propertyPath: startAngle
+      value: 350
+      objectReference: {fileID: 0}
     - target: {fileID: 2354063312408584266, guid: 04f8371a6b08ade4283a6c55f189f889, type: 3}
       propertyPath: m_Name
       value: Radio
@@ -1259,6 +1267,10 @@ PrefabInstance:
     - target: {fileID: 2743904964175833517, guid: e3bcd38e7d1cd4442a42e0b5deac5c24, type: 3}
       propertyPath: m_Name
       value: LightBulbBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 2798825028512118144, guid: e3bcd38e7d1cd4442a42e0b5deac5c24, type: 3}
+      propertyPath: m_Intensity
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3269507408960025367, guid: e3bcd38e7d1cd4442a42e0b5deac5c24, type: 3}
       propertyPath: m_RootOrder
