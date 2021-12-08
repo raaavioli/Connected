@@ -12,9 +12,7 @@ public class Dimming : MonoBehaviour
     [SerializeField]
     [Range(0.0f, 1.0f)]
     float Intensity = 0.0f;
-    [SerializeField]
-    [Range(1.0f, 30.0f)]
-    float MaxIntensity = 30.0f;
+    const float FilamentIntensity = 2.0f;
 
     Renderer FilamentRenderer;
     MaterialPropertyBlock FilamentMpb;
@@ -28,12 +26,14 @@ public class Dimming : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FilamentMpb.SetColor("_EmissionColor", Colors.FilamentColor * Intensity);
+        int lightOn = (Intensity > 0) ? 1 : 0;
+        FilamentMpb.SetColor("_EmissionColor", lightOn * Colors.FilamentColor * (1 + FilamentIntensity * Intensity));
         FilamentRenderer.SetPropertyBlock(FilamentMpb);
-        LightSource.intensity = MaxIntensity * Intensity;
+        LightSource.intensity = 2f * Intensity;
     }
 
-    public void SetIntensity(float intensity) {
+    public void SetIntensity(float intensity)
+    {
         if (intensity > 1f)
             intensity = 1;
         if (intensity < 0)
