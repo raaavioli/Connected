@@ -40,12 +40,12 @@ public class WireSpawner : MonoBehaviour
         {
             GameObject wire = Instantiate(wirePrefab);
             GameObject startConnector = wire.transform.GetChild(0).gameObject;
-            startConnector.transform.rotation = Quaternion.Inverse(startConnector.transform.rotation);
             GameObject endConnector = wire.transform.GetChild(1).gameObject;
-            endConnector.transform.rotation = Quaternion.Inverse(endConnector.transform.rotation);
 
-            player.leftHand.AttachObject(startConnector, GrabTypes.Pinch);
-            player.rightHand.AttachObject(endConnector, GrabTypes.Pinch);
+            Hand.AttachmentFlags flags = startConnector.GetComponent<Throwable>().attachmentFlags;
+
+            player.leftHand.AttachObject(startConnector, GrabTypes.Pinch, flags, wire.transform);
+            player.rightHand.AttachObject(endConnector, GrabTypes.Pinch, flags, wire.transform);
         }
     }
 
