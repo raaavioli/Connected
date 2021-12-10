@@ -5,6 +5,7 @@ using UnityEngine;
 public class Battery : GeneralComponent {
     [SerializeField]
     private float voltage;
+    private int errorCount = 0;
 
     private void Start()
     {
@@ -28,9 +29,14 @@ public class Battery : GeneralComponent {
         if (CheckConnection(positive)) {
             nextComponent = positive.positive;
         }
-
+        errorCount = 0;
         while (nextComponent != this && nextComponent != null)
         {
+            errorCount++;
+            if (errorCount > 500) {
+                Debug.Log("rad 37");
+                break;
+            }
             resistanceSum += nextComponent.resistance;
 
             if (!CheckConnection(nextComponent.positive)) break;
@@ -73,7 +79,13 @@ public class Battery : GeneralComponent {
         this.positive.ShowCurrent();
         GeneralComponent nextComponent = this.positive.positive;
 
+        errorCount = 0;
         while (nextComponent != this) {
+            errorCount++;
+            if (errorCount > 500) {
+                Debug.Log("rad 86");
+                break;
+            }
             if (nextComponent.GetType() == typeof(Splitter)) {
                 Splitter foundSplitter = (Splitter)nextComponent;
                 nextComponent = foundSplitter.ResolveSplitter(current);
@@ -88,8 +100,14 @@ public class Battery : GeneralComponent {
     private void ResetCircuit() 
     { // Assumes broken circuit, trace both ways to resest currents to 0 and hide current shader in wires.
         GeneralComponent nextComponent = this;
+        errorCount = 0;
         while (nextComponent != null)
         { // positive direction
+            errorCount++;
+            if (errorCount > 500) {
+                Debug.Log("rad 108");
+                break;
+            }
             nextComponent.current = 0.0f;
 
             if (nextComponent.positive != null) {
@@ -112,8 +130,14 @@ public class Battery : GeneralComponent {
         }
 
         nextComponent = this;
+        errorCount = 0;
         while (nextComponent != null) 
         { // negative direction
+            errorCount++;
+            if (errorCount > 500) {
+                Debug.Log("rad 138");
+                break;
+            }
             nextComponent.current = 0.0f;
 
             if (nextComponent.negative != null) {
