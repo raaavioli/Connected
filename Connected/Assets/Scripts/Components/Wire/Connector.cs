@@ -81,7 +81,7 @@ public class Connector : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter(Collider other) {
-		if (other.CompareTag("Slot")) {
+		if (other.CompareTag("Slot") && connectedSlot == null) {
             connectedSlot = other.GetComponent<Slot>();
 			if (connectedSlot.IsEmpty()) {
 				ConnectionActions();
