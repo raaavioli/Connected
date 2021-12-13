@@ -5,8 +5,7 @@ using UnityEngine;
 public class Battery : GeneralComponent {
     [SerializeField]
     private float voltage;
-
-    private int MAX_CIRCUIT_SIZE = 1000;
+    private int errorCount = 0;
 
     private void Start()
     {
@@ -30,9 +29,14 @@ public class Battery : GeneralComponent {
         if (CheckConnection(positive)) {
             nextComponent = positive.positive;
         }
-
+        errorCount = 0;
         while (nextComponent != this && nextComponent != null)
         {
+            errorCount++;
+            if (errorCount > 500) {
+                Debug.Log("rad 37");
+                break;
+            }
             resistanceSum += nextComponent.resistance;
 
             if (!CheckConnection(nextComponent.positive)) break;
@@ -75,7 +79,13 @@ public class Battery : GeneralComponent {
         this.positive.ShowCurrent();
         GeneralComponent nextComponent = this.positive.positive;
 
+        errorCount = 0;
         while (nextComponent != this) {
+            errorCount++;
+            if (errorCount > 500) {
+                Debug.Log("rad 86");
+                break;
+            }
             if (nextComponent.GetType() == typeof(Splitter)) {
                 Splitter foundSplitter = (Splitter)nextComponent;
                 nextComponent = foundSplitter.ResolveSplitter(current);
@@ -87,39 +97,64 @@ public class Battery : GeneralComponent {
         }
     }
 
-    private void ResetCircuit() { // Assumes broken circuit, trace both ways to resest currents to 0 and hide current shader in wires.
-        // Trace in positive direction.
+    private void ResetCircuit() 
+    { // Assumes broken circuit, trace both ways to resest currents to 0 and hide current shader in wires.
         GeneralComponent nextComponent = this;
-        for (int i = 0; i < MAX_CIRCUIT_SIZE; ++i) {
-            // Reset current.
-            nextComponent.current = 0.0f;
-            
-            if (nextComponent.positive != null) { // If there is a wire connected.
-                nextComponent.positive.HideCurrent();
-                if (nextComponent.positive.positive != null) { // If the wire is connected to an additional component.
-                    nextComponent = nextComponent.positive.positive;
-				} else { // There was no next component, circuit was broken here.
-                    break;
-				}
-            } else { // There was no next wire, circuit was broken here.
+        errorCount = 0;
+        while (nextComponent != null)
+        { // positive direction
+            errorCount++;
+            if (errorCount > 500) {
+                Debug.Log("rad 108");
                 break;
-			}
-        }
-
-        // Trace in negative direction.
-        nextComponent = this;
-        for (int i = 0; i < MAX_CIRCUIT_SIZE; ++i) {
-            // Reset current.
+            }
             nextComponent.current = 0.0f;
 
-            if (nextComponent.negative != null) { // If there is a wire connected.
-                nextComponent.negative.HideCurrent();
-                if (nextComponent.negative.negative != null) { // If the wire is connected to an additional component.
-                    nextComponent = nextComponent.negative.negative;
-                } else { // There was no next component, circuit was broken here.
+            if (nextComponent.positive != null) {
+                nextComponent.positive.HideCurrent();
+            }
+
+            if (nextComponent.GetType() == typeof(Splitter)) {  //  Go into splitter logic.
+                Splitter foundSplitter = (Splitter)nextComponent;
+                nextComponent = foundSplitter.ResetSplitter();
+                if (nextComponent == null) { // If splitter found the break
                     break;
                 }
-            } else { // There was no next wire, circuit was broken here.
+            } 
+
+            if (CheckConnection(nextComponent.positive)) {
+                nextComponent = nextComponent.positive.positive;
+            } else { // No component existed on the other end of the wire.
+                break;
+            }
+        }
+
+        nextComponent = this;
+        errorCount = 0;
+        while (nextComponent != null) 
+        { // negative direction
+            errorCount++;
+            if (errorCount > 500) {
+                Debug.Log("rad 138");
+                break;
+            }
+            nextComponent.current = 0.0f;
+
+            if (nextComponent.negative != null) {
+                nextComponent.negative.HideCurrent();
+            }
+
+            if (nextComponent.GetType() == typeof(Combiner)) {  //  Go into splitter logic.
+                Combiner foundCombiner = (Combiner)nextComponent;
+                nextComponent = foundCombiner.ResetCombiner();
+                if (nextComponent == null) { // If Combiner found the break
+                    break;
+                }
+            }
+
+            if (CheckConnection(nextComponent.negative, false)) {
+                nextComponent = nextComponent.negative.negative;
+            } else { // No component existed on the other end of the wire.
                 break;
             }
         }
