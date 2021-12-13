@@ -253,6 +253,22 @@ namespace Valve.VR.InteractionSystem
             }
         }
 
+        //Specific implementation
+        [SerializeField]
+        private AudioClip[] grabSounds;
+        [SerializeField]
+        private AudioClip[] releaseSounds;
+
+        private AudioSource audioSource;
+        private void PlaySound(bool grab) {
+            if(grab)
+			    audioSource.clip = grabSounds[UnityEngine.Random.Range(0,grabSounds.Length)];
+		    else
+			    audioSource.clip = releaseSounds[UnityEngine.Random.Range(0,releaseSounds.Length)];
+            audioSource.Play();
+        }
+        //End of Specific implementation
+
         public void ShowController(bool permanent = false)
         {
             if (mainRenderModel != null)
@@ -570,6 +586,8 @@ namespace Valve.VR.InteractionSystem
 
             UpdateHovering();
 
+            PlaySound(true);
+
             if (spewDebugText)
                 HandDebugLog("AttachObject " + objectToAttach);
             objectToAttach.SendMessage("OnAttachedToHand", this, SendMessageOptions.DontRequireReceiver);
@@ -690,6 +708,8 @@ namespace Valve.VR.InteractionSystem
 
             CleanUpAttachedObjectStack();
 
+            PlaySound(false);
+
             if (mainRenderModel != null)
                 mainRenderModel.MatchHandToTransform(mainRenderModel.transform);
             if (hoverhighlightRenderModel != null)
@@ -793,6 +813,8 @@ namespace Valve.VR.InteractionSystem
                 if (trackedObject != null)
                     trackedObject.onTransformUpdatedEvent += OnTransformUpdated;
             }
+
+            audioSource = GetComponent<AudioSource>();
         }
 
         protected virtual void OnDestroy()
