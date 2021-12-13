@@ -50,21 +50,6 @@
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/SpawnWire",
-      "type": "boolean",
-      "requirement": "suggested"
-    },
-    {
-      "name": "/actions/default/in/LeftHandTrigger",
-      "type": "vector1",
-      "requirement": "mandatory"
-    },
-    {
-      "name": "/actions/default/in/RightHandTrigger",
-      "type": "vector1",
-      "requirement": "mandatory"
-    },
-    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
