@@ -5,7 +5,7 @@ using UnityEngine;
 public class Battery : GeneralComponent {
     [SerializeField]
     private float voltage;
-    private int errorCount = 0;
+    private int errorCount = 0, circuitCap = 500;
 
     private void Start()
     {
@@ -22,45 +22,44 @@ public class Battery : GeneralComponent {
         GeneralComponent nextComponent = null;
         List<Battery> foundPowerSources = new List<Battery>();
         foundPowerSources.Add(this);
+        WireEnd end;
 
         float resistanceSum = 0.0f;
         float voltageSum = 0.0f;
 
-        if (CheckConnection(positive)) {
-            nextComponent = positive.positive;
+        if (CheckConnection(this, positive)) {
+            end = positive.GetOtherEnd(this);
+            if (end.polarity) {
+                nextComponent = end.component;
+            } else {
+                nextComponent = null;
+			}
         }
         errorCount = 0;
         while (nextComponent != this && nextComponent != null)
         {
             errorCount++;
-            if (errorCount > 500) {
-                Debug.Log("rad 37");
+            if (errorCount > circuitCap) {
+                Debug.Log("cap reached in check");
                 break;
             }
             resistanceSum += nextComponent.resistance;
 
-            if (!CheckConnection(nextComponent.positive)) break;
+            if (!CheckConnection(nextComponent, nextComponent.positive)) {
+                break;
+            }
 
             if (nextComponent.GetType() == typeof(Battery)) {
                 Battery foundPowerSource = (Battery)nextComponent;
                 foundPowerSources.Add(foundPowerSource);
                 voltageSum += foundPowerSource.voltage;
-            } else if (nextComponent.GetType() == typeof(Splitter)) {
-                float splitterResistance;
-                Splitter foundSplitter = (Splitter)nextComponent;
-
-                (splitterResistance, nextComponent) = foundSplitter.CheckSplitter();
-                if (splitterResistance == 0 && nextComponent == null) { // if splitter wasn't closed correctly
-                    break;
-                } else  {
-                    resistanceSum += splitterResistance;
-                }
-            } else if (nextComponent.GetType() == typeof(Combiner)) { // if battery is inside of a splitter-combiner.
-                // Temporary error message
-                Debug.Log("Battery not allowed to be coupled inside of a splitter-combiner.");
-                break;
             }
-            nextComponent = nextComponent.positive.positive;
+            end = nextComponent.positive.GetOtherEnd(nextComponent);
+            if (end.polarity) {
+                nextComponent = end.component;
+			} else {
+                break;
+			}
         }
         voltageSum += this.voltage; resistanceSum += this.resistance;
         if (nextComponent == this) {
@@ -77,23 +76,18 @@ public class Battery : GeneralComponent {
         float current = voltage / (resistance + Mathf.Epsilon); //TODO: Explode powersource or whatever, when current is near-infinite.
         this.current = current;
         this.positive.ShowCurrent();
-        GeneralComponent nextComponent = this.positive.positive;
+        GeneralComponent nextComponent = this.positive.GetOtherComponent(this);
 
         errorCount = 0;
         while (nextComponent != this) {
             errorCount++;
-            if (errorCount > 500) {
-                Debug.Log("rad 86");
+            if (errorCount > circuitCap) {
+                Debug.Log("cap reached in resolve");
                 break;
             }
-            if (nextComponent.GetType() == typeof(Splitter)) {
-                Splitter foundSplitter = (Splitter)nextComponent;
-                nextComponent = foundSplitter.ResolveSplitter(current);
-            } else {
-                nextComponent.current = current;
-                nextComponent = nextComponent.positive.positive;
-                nextComponent.positive.ShowCurrent();
-            }
+            nextComponent.current = current;
+            nextComponent = nextComponent.positive.GetOtherComponent(nextComponent);
+            nextComponent.positive.ShowCurrent();
         }
     }
 
@@ -104,8 +98,8 @@ public class Battery : GeneralComponent {
         while (nextComponent != null)
         { // positive direction
             errorCount++;
-            if (errorCount > 500) {
-                Debug.Log("rad 108");
+            if (errorCount > circuitCap) {
+                Debug.Log("cap reached in positive reset");
                 break;
             }
             nextComponent.current = 0.0f;
@@ -114,28 +108,21 @@ public class Battery : GeneralComponent {
                 nextComponent.positive.HideCurrent();
             }
 
-            if (nextComponent.GetType() == typeof(Splitter)) {  //  Go into splitter logic.
-                Splitter foundSplitter = (Splitter)nextComponent;
-                nextComponent = foundSplitter.ResetSplitter();
-                if (nextComponent == null) { // If splitter found the break
-                    break;
-                }
-            } 
-
-            if (CheckConnection(nextComponent.positive)) {
-                nextComponent = nextComponent.positive.positive;
+            if (CheckConnection(nextComponent, nextComponent.positive)) {
+                nextComponent = nextComponent.positive.GetOtherComponent(nextComponent);
             } else { // No component existed on the other end of the wire.
                 break;
             }
+            if (nextComponent == this) break;
         }
 
         nextComponent = this;
         errorCount = 0;
-        while (nextComponent != null) 
+        while (nextComponent != null)
         { // negative direction
             errorCount++;
-            if (errorCount > 500) {
-                Debug.Log("rad 138");
+            if (errorCount > circuitCap) {
+                Debug.Log("Cap reached in negative´reset");
                 break;
             }
             nextComponent.current = 0.0f;
@@ -144,19 +131,12 @@ public class Battery : GeneralComponent {
                 nextComponent.negative.HideCurrent();
             }
 
-            if (nextComponent.GetType() == typeof(Combiner)) {  //  Go into splitter logic.
-                Combiner foundCombiner = (Combiner)nextComponent;
-                nextComponent = foundCombiner.ResetCombiner();
-                if (nextComponent == null) { // If Combiner found the break
-                    break;
-                }
-            }
-
-            if (CheckConnection(nextComponent.negative, false)) {
-                nextComponent = nextComponent.negative.negative;
+            if (CheckConnection(nextComponent, nextComponent.negative)) {
+                nextComponent = nextComponent.negative.GetOtherComponent(nextComponent);
             } else { // No component existed on the other end of the wire.
                 break;
             }
+            if (nextComponent == this) break;
         }
     }
 }

@@ -53,10 +53,10 @@ public class Slot : MonoBehaviour
         
         if (positive) {
             associatedComponent.positive = connectedWire;
-            connectedWire.negative = associatedComponent;
+            connectedWire.SetEnd(associatedComponent, false);
 		} else {
             associatedComponent.negative = connectedWire;
-            connectedWire.positive = associatedComponent;
+            connectedWire.SetEnd(associatedComponent, true);
 		}
 
         return true;
@@ -69,12 +69,10 @@ public class Slot : MonoBehaviour
 
         if (positive) {
             associatedComponent.positive = null;
-            connectedWire.negative = null;
 		} else {
             associatedComponent.negative = null;
-            connectedWire.positive = null;
 		}
-
+        connectedWire.ClearEnd(associatedComponent);
         connectedConnector = null;
         connectedWire = null;
 	}
