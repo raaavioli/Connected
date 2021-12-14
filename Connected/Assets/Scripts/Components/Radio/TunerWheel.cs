@@ -8,7 +8,8 @@ public class TunerWheel : MonoBehaviour
     public float GetValue01()
     {
         // Wheel rotation angle is -270 to 0, or simply 90 to 360.
-        return Mathf.Clamp01((360f - transform.localEulerAngles.z) / 270f);
+        // Mapping from 90 -> 0 and 360 -> 1
+        return Mathf.Clamp01(1 - (360f - transform.localEulerAngles.z) / 270f);
     }
 
     void Update()

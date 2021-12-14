@@ -17,6 +17,10 @@ public class Connector : MonoBehaviour {
 	private Color negativeColor;
 	[SerializeField]
 	private Color neutralColor;
+	[SerializeField]
+	private AudioClip[] connectSounds;
+	[SerializeField]
+	private AudioClip[] disconnectSounds;
 
 	[SerializeField]
 	private Wire _associatedWire;
@@ -37,12 +41,14 @@ public class Connector : MonoBehaviour {
 	private Rigidbody rb;
 	private SphereCollider trigger;
 	private BoxCollider boxCollider;
+	private AudioSource audioSource;
 	private void Awake() {
 		meshRenderer = GetComponent<MeshRenderer>();
 		rb = GetComponent<Rigidbody>();
 		trigger = GetComponent<SphereCollider>();
 		interactable = GetComponent<Interactable>();
 		boxCollider = GetComponent<BoxCollider>();
+		audioSource = GetComponent<AudioSource>();
 	}
 
 	private void OnEnable() {
@@ -105,6 +111,7 @@ public class Connector : MonoBehaviour {
 			associatedWire.RecolorWire(this, positive ? positiveColor : negativeColor);
 
 			CircuitManager.TraceCircuits();
+			PlaySound(true);
 		}
 	}
 
@@ -124,6 +131,7 @@ public class Connector : MonoBehaviour {
 		}
 
 		CircuitManager.TraceCircuits();
+		PlaySound(false);
 	}
 
 	private bool IsHeld() {
@@ -133,6 +141,14 @@ public class Connector : MonoBehaviour {
 	private IEnumerator DelayEnableTrigger() {
 		yield return new WaitForSeconds(0.5f);
 		trigger.enabled = true;
+	}
+
+	private void PlaySound(bool connect) {
+		if(connect)
+			audioSource.clip = connectSounds[Random.Range(0,connectSounds.Length)];
+		else
+			audioSource.clip = disconnectSounds[Random.Range(0,disconnectSounds.Length)];
+        audioSource.Play();
 	}
 
 	// Returns the polarity of the slot where this connector is connected.

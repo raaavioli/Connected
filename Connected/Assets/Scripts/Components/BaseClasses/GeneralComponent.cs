@@ -8,9 +8,14 @@ public abstract class GeneralComponent : MonoBehaviour {
     public float current { get; set; }
     public float resistance { get; protected set; }
 
-    public static bool CheckConnection(Wire positive) {
-        if (positive == null) return false;
-        else return positive.positive != null;
+    public static bool CheckConnection(Wire wire, bool positiveDirection = true) {
+        if (wire == null) {
+            return false;
+        } else if (positiveDirection) {
+            return wire.positive != null;
+        } else {
+            return wire.negative != null;
+        }
     }
 
     protected float CalculateVoltage() {
