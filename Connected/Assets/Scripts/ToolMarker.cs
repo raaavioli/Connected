@@ -2,61 +2,87 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToolMarker : MonoBehaviour
+namespace Valve.VR.InteractionSystem
 {
-    [SerializeField]
-    GameObject toolPrefab;
-
-    Renderer markerRenderer;
-
-    MaterialPropertyBlock Mpb;
-
-    private void Awake()
+    public class ToolMarker : MonoBehaviour
     {
-        markerRenderer = GetComponent<Renderer>();
+        [SerializeField]
+        GameObject toolPrefab;
 
-        Mpb = new MaterialPropertyBlock();
-        Mpb.SetColor("_Color", Colors.DarkBrown);
-    }
+        Renderer markerRenderer;
 
-    private void Start()
-    {
-        ToolManager.Add(this);
-        if (CanInstantiate())
+        MaterialPropertyBlock Mpb;
+
+        private void Awake()
         {
-            GameObject tool = InstantiateTool(transform.position);
-            tool.transform.localScale = new Vector3(1, 1, 1);
-            tool.transform.position -= transform.forward * 0.1f;
+            markerRenderer = GetComponent<Renderer>();
+
+            Mpb = new MaterialPropertyBlock();
+            Mpb.SetColor("_Color", Colors.DarkBrown);
         }
-    }
 
-    private void OnDestroy()
-    {
-        ToolManager.Remove(this);
-    }
-
-    public void Update()
-    {
-        Mpb.SetColor("_Color", toolPrefab == null ? Colors.DarkBrown : Colors.Orange);
-        Mpb.SetVector("_ObjectScale", transform.localScale);
-        markerRenderer.SetPropertyBlock(Mpb, 0);
-    }
-
-    public bool CanInstantiate()
-    {
-        return toolPrefab != null;
-    }
-
-    public GameObject InstantiateTool(Vector3 position)
-    {
-        if (CanInstantiate())
+        private void Start()
         {
-            return Instantiate(toolPrefab, position, transform.rotation);
+            ToolManager.Add(this);
+            if (CanInstantiate())
+            {
+                GameObject tool = InstantiateTool(transform.position);
+                tool.transform.localScale = new Vector3(2, 2, 1); // Due to now inheriting the scale from its parent (the tool markers), this has to compensate for that so the tools are the proper size.
+                tool.transform.position -= transform.forward * 0.1f;
+                Destroy(tool.GetComponent<Throwable>());
+                Destroy(tool.GetComponent<Interactable>());
+                Destroy(tool.GetComponent<Rigidbody>());
+                Destroy(tool.GetComponent<BoxCollider>());
+            }
         }
-        else
+
+        private void OnDestroy()
         {
-            Debug.LogError("Cannot instantiate null prefab in ToolMarker");
-            return null;
+            ToolManager.Remove(this);
         }
+
+        public void Update()
+        {
+            Mpb.SetColor("_Color", toolPrefab == null ? Colors.DarkBrown : Colors.Orange);
+            Mpb.SetVector("_ObjectScale", transform.localScale);
+            markerRenderer.SetPropertyBlock(Mpb, 0);
+        }
+
+        public bool CanInstantiate()
+        {
+            return toolPrefab != null;
+        }
+
+        public GameObject InstantiateTool(Vector3 position)
+        {
+            if (CanInstantiate())
+            {
+                return Instantiate(toolPrefab, position, Quaternion.Euler(0,0,0), transform);
+            }
+            else
+            {
+                Debug.LogError("Cannot instantiate null prefab in ToolMarker");
+                return null;
+            }
+        }
+
+        // STEAM VR FUNCTIONS
+
+        public void SpawnAndAttach(Hand hand)
+        {
+            GameObject prefabObject = Instantiate(toolPrefab);
+            hand.AttachObject(prefabObject, GrabTypes.Pinch);
+        }
+
+        // This is like the update function. It is polled whenever a steamVR "hand" hovers over it.
+		private void HandHoverUpdate(Hand hand)
+		{
+            GrabTypes startingGrab = hand.GetGrabStarting();
+
+            if (startingGrab != GrabTypes.None)
+            {
+                SpawnAndAttach(hand);
+            }
+		}
     }
 }

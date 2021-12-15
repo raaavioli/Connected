@@ -2,28 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToolManager : MonoBehaviour
+namespace Valve.VR.InteractionSystem
 {
-    private List<ToolMarker> toolMarkers;
-    private static ToolManager instance;
-
-    private void Awake()
+    public class ToolManager : MonoBehaviour
     {
-        if (instance == null) 
-            instance = this;
-        else 
-            Destroy(this);
+        private List<ToolMarker> toolMarkers;
+        private static ToolManager instance;
 
-        toolMarkers = new List<ToolMarker>();
-    }
+        private void Awake()
+        {
+            if (instance == null) 
+                instance = this;
+            else 
+                Destroy(this);
 
-    public static void Add(ToolMarker toolMarker)
-    {
-        instance.toolMarkers.Add(toolMarker);
-    }
+            toolMarkers = new List<ToolMarker>();
+        }
 
-    public static void Remove(ToolMarker toolMarker)
-    {
-        instance.toolMarkers.Remove(toolMarker);
+        public static void Add(ToolMarker toolMarker)
+        {
+            instance.toolMarkers.Add(toolMarker);
+        }
+
+        public static void Remove(ToolMarker toolMarker)
+        {
+            instance.toolMarkers.Remove(toolMarker);
+        }
     }
 }
