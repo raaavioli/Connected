@@ -42,6 +42,7 @@ public class Connector : MonoBehaviour {
 	private SphereCollider trigger;
 	private BoxCollider boxCollider;
 	private AudioSource audioSource;
+
 	private void Awake() {
 		meshRenderer = GetComponent<MeshRenderer>();
 		rb = GetComponent<Rigidbody>();
@@ -88,8 +89,9 @@ public class Connector : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other) {
 		if (other.CompareTag("Slot") && connectedSlot == null) {
-            connectedSlot = other.GetComponent<Slot>();
-			if (connectedSlot.IsEmpty()) {
+            Slot potentialConnectedSlot = other.GetComponent<Slot>();
+			if (potentialConnectedSlot.IsEmpty()) {
+				connectedSlot = potentialConnectedSlot;
 				ConnectionActions();
 			}
 		}
@@ -124,7 +126,7 @@ public class Connector : MonoBehaviour {
 			meshRenderer.material = neutralMaterial;
         }
 
-		if (associatedWire != null)
+		if (associatedWire != null && this.isActiveAndEnabled)
         {
 			associatedWire.RecolorWire(this, neutralColor);
 			StartCoroutine(DelayEnableTrigger());

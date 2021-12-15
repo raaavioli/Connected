@@ -5,8 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(WireRenderer))]
 public class Wire : MonoBehaviour {
 
-    public GeneralComponent positive { get; set; }
-    public GeneralComponent negative { get; set; }
+	// positive = true, negative == false
+	private WireEnd pointA = new WireEnd(), pointB = new WireEnd();
 
 	private WireRenderer wireRenderer;
 	private Connector startConnector;
@@ -29,12 +29,6 @@ public class Wire : MonoBehaviour {
 		wireRenderer = GetComponent<WireRenderer>();
 		startConnector = transform.Find("StartPoint").GetComponent<Connector>();
 		endConnector = transform.Find("EndPoint").GetComponent<Connector>();
-	}
-
-	private void Update() {
-		if (positive == null || negative == null) {
-			HideCurrent();
-		}
 	}
 
 	public void ShowCurrent() {
@@ -64,5 +58,51 @@ public class Wire : MonoBehaviour {
 			// Otherwise, something was not as it should be and the connection is broken.
 			return 0;
 		}
+	}
+	public WireEnd GetOtherEnd(GeneralComponent start) {
+		if (start == null) {
+			return new WireEnd();
+		}
+
+		if (pointA.component == start) {
+			return pointB;
+		} else if (pointB.component == start) {
+			return pointA;
+		} else {
+			return new WireEnd();
+		}
+	}
+
+	public GeneralComponent GetOtherComponent(GeneralComponent start) {
+		return this.GetOtherEnd(start).component;
+	}
+
+	public void SetEnd(GeneralComponent component, bool polarity) {
+		if (pointA.component == null) {
+			pointA = new WireEnd(component, polarity);
+		} else if (pointB.component == null) {
+			pointB = new WireEnd(component, polarity);
+		} else {
+			Debug.LogError("SetEnd broke");
+		}
+	}
+
+	public void ClearEnd(GeneralComponent component) {
+		if (pointA.component == component) {
+			pointA.component = null;
+		} else if (pointB.component == component) {
+			pointB.component = null;
+		}
+	}
+}
+
+public class WireEnd {
+	public GeneralComponent component { get; set; }
+	public bool polarity { get; set; }
+
+	public WireEnd() { }
+	public WireEnd(GeneralComponent component, bool isPositive) {
+		polarity = isPositive;
+		this.component = component;
 	}
 }

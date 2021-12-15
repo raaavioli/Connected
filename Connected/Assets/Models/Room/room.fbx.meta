@@ -22,8 +22,33 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: LightEmissive
+    second: {fileID: 2100000, guid: 1790d4ed0966b1b4a93a9eb9e708e849, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LightPlastic
+    second: {fileID: 2100000, guid: 778adc5231c259a4abd381d51c720b27, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RadiatorCombined
+    second: {fileID: 2100000, guid: 2ebafbc76f30f7a49a0517e0837af4c1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: RoomCombined
     second: {fileID: 2100000, guid: 13e8a665b15ee1a4f80dd7d866066737, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TrashBag
+    second: {fileID: 2100000, guid: b6fc41bf9c01a074aab42e218ea9ef39, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TrashCan
+    second: {fileID: 2100000, guid: ba7951b915047074b8594e88566dcd06, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
