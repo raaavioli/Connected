@@ -27,8 +27,12 @@ namespace Valve.VR.InteractionSystem
             if (CanInstantiate())
             {
                 GameObject tool = InstantiateTool(transform.position);
-                tool.transform.localScale = new Vector3(1, 1, 1);
+                tool.transform.localScale = new Vector3(2, 2, 1); // Due to now inheriting the scale from its parent (the tool markers), this has to compensate for that so the tools are the proper size.
                 tool.transform.position -= transform.forward * 0.1f;
+                Destroy(tool.GetComponent<Throwable>());
+                Destroy(tool.GetComponent<Interactable>());
+                Destroy(tool.GetComponent<Rigidbody>());
+                Destroy(tool.GetComponent<BoxCollider>());
             }
         }
 
@@ -53,7 +57,7 @@ namespace Valve.VR.InteractionSystem
         {
             if (CanInstantiate())
             {
-                return Instantiate(toolPrefab, position, transform.rotation);
+                return Instantiate(toolPrefab, position, Quaternion.Euler(0,0,0), transform);
             }
             else
             {
@@ -67,7 +71,7 @@ namespace Valve.VR.InteractionSystem
         public void SpawnAndAttach(Hand hand)
         {
             GameObject prefabObject = Instantiate(toolPrefab);
-            hand.AttachObject(prefabObject, GrabTypes.Scripted);
+            hand.AttachObject(prefabObject, GrabTypes.Pinch);
         }
 
         // This is like the update function. It is polled whenever a steamVR "hand" hovers over it.
