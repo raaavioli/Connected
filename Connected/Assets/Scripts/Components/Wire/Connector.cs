@@ -17,8 +17,23 @@ public class Connector : MonoBehaviour {
 	private Color negativeColor;
 	[SerializeField]
 	private Color neutralColor;
+	[SerializeField]
+	private AudioClip[] connectSounds;
+	[SerializeField]
+	private AudioClip[] disconnectSounds;
 
-	public Wire associatedWire { get; private set; }
+	[SerializeField]
+	private Wire _associatedWire;
+	public Wire associatedWire { 
+		get
+        {
+			return _associatedWire;
+        }
+		private set
+        {
+			_associatedWire = value;
+        }
+	}
 
     private MeshRenderer meshRenderer;
 	private Interactable interactable;
@@ -26,12 +41,15 @@ public class Connector : MonoBehaviour {
 	private Rigidbody rb;
 	private SphereCollider trigger;
 	private BoxCollider boxCollider;
+	private AudioSource audioSource;
+
 	private void Awake() {
 		meshRenderer = GetComponent<MeshRenderer>();
 		rb = GetComponent<Rigidbody>();
 		trigger = GetComponent<SphereCollider>();
 		interactable = GetComponent<Interactable>();
 		boxCollider = GetComponent<BoxCollider>();
+		audioSource = GetComponent<AudioSource>();
 	}
 
 	private void OnEnable() {
@@ -42,15 +60,24 @@ public class Connector : MonoBehaviour {
 		interactable.onAttachedToHand -= GrabDisconnect;
 	}
 
+	private void OnDestroy()
+    {
+		if (connectedSlot != null)
+		{
+			DisconnectionActions();
+		}
+
+		if (associatedWire != null)
+        {
+			Destroy(associatedWire.gameObject);
+		}
+	}
+
 	private void GrabDisconnect(Hand hand) {
 		if (connectedSlot != null) {
 			DisconnectionActions();
 		}
 	}
-
-	private void Start() {
-        associatedWire = transform.parent.GetComponent<Wire>();
-    }
 
 	private void Update() {
 		if (!IsHeld() && connectedSlot == null) {
@@ -61,9 +88,10 @@ public class Connector : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter(Collider other) {
-		if (other.CompareTag("Slot")) {
-            connectedSlot = other.GetComponent<Slot>();
-			if (connectedSlot.IsEmpty()) {
+		if (other.CompareTag("Slot") && connectedSlot == null) {
+            Slot potentialConnectedSlot = other.GetComponent<Slot>();
+			if (potentialConnectedSlot.IsEmpty()) {
+				connectedSlot = potentialConnectedSlot;
 				ConnectionActions();
 			}
 		}
@@ -83,16 +111,29 @@ public class Connector : MonoBehaviour {
 
 			meshRenderer.material = positive ? positiveMaterial : negativeMaterial;
 			associatedWire.RecolorWire(this, positive ? positiveColor : negativeColor);
+
+			CircuitManager.TraceCircuits();
+			PlaySound(true);
 		}
 	}
 
 	private void DisconnectionActions() {
 		connectedSlot.Disconnect();
 		connectedSlot = null;
-		StartCoroutine(DelayEnableTrigger());
 
-		meshRenderer.material = neutralMaterial;
-		associatedWire.RecolorWire(this, neutralColor);
+		if (meshRenderer != null)
+        {
+			meshRenderer.material = neutralMaterial;
+        }
+
+		if (associatedWire != null && this.isActiveAndEnabled)
+        {
+			associatedWire.RecolorWire(this, neutralColor);
+			StartCoroutine(DelayEnableTrigger());
+		}
+
+		CircuitManager.TraceCircuits();
+		PlaySound(false);
 	}
 
 	private bool IsHeld() {
@@ -102,6 +143,14 @@ public class Connector : MonoBehaviour {
 	private IEnumerator DelayEnableTrigger() {
 		yield return new WaitForSeconds(0.5f);
 		trigger.enabled = true;
+	}
+
+	private void PlaySound(bool connect) {
+		if(connect)
+			audioSource.clip = connectSounds[Random.Range(0,connectSounds.Length)];
+		else
+			audioSource.clip = disconnectSounds[Random.Range(0,disconnectSounds.Length)];
+        audioSource.Play();
 	}
 
 	// Returns the polarity of the slot where this connector is connected.

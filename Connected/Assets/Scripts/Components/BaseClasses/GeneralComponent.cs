@@ -8,9 +8,12 @@ public abstract class GeneralComponent : MonoBehaviour {
     public float current { get; set; }
     public float resistance { get; protected set; }
 
-    public static bool CheckConnection(Wire positive) {
-        if (positive == null) return false;
-        else return positive.positive != null;
+    public static bool CheckConnection(GeneralComponent thisComponent, Wire wire) {
+        if (wire == null) {
+            return false;
+        } else {
+            return wire.GetOtherComponent(thisComponent) != null;
+		}
     }
 
     protected float CalculateVoltage() {
