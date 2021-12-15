@@ -124,7 +124,7 @@ public class Connector : MonoBehaviour {
 			meshRenderer.material = neutralMaterial;
         }
 
-		if (associatedWire != null)
+		if (associatedWire != null && this.isActiveAndEnabled)
         {
 			associatedWire.RecolorWire(this, neutralColor);
 			StartCoroutine(DelayEnableTrigger());
