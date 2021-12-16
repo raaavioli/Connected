@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 131113220}
   - component: {fileID: 131113219}
   - component: {fileID: 131113218}
+  - component: {fileID: -3665307694947406106}
   m_Layer: 0
   m_Name: BatteryBase
   m_TagString: Untagged
@@ -223,6 +224,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   interactable: {fileID: 0}
+--- !u!114 &-3665307694947406106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563716347544503290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83d181547a4d22749aea3ba215e93e6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawner: {fileID: 0}
 --- !u!1 &1833535052654443473
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,7 +354,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 495dc487b65890f4682c7387b244db1b, type: 3}
+  m_Script: {fileID: 11500000, guid: 8374da7b75b30431cbb75064196e7ac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &3063034405120861143

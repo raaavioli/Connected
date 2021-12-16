@@ -12,6 +12,9 @@ public class Wire : MonoBehaviour {
 	private Connector startConnector;
 	private Connector endConnector;
 
+	[HideInInspector]
+	public WireSpawner spawner;
+
 	private void OnDestroy()
     {
 		if (startConnector != null)
@@ -23,6 +26,8 @@ public class Wire : MonoBehaviour {
         {
 			Destroy(endConnector.gameObject);
         }
+
+		spawner.currentWires -= 1;
 	}
 
 	private void Awake() {

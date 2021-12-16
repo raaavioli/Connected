@@ -13,12 +13,21 @@ namespace Valve.VR.InteractionSystem
 
         MaterialPropertyBlock Mpb;
 
+        TextMesh amountText;
+        public int maxTools = 5;
+        public int currentTools = 0;
+
         private void Awake()
         {
             markerRenderer = GetComponent<Renderer>();
 
             Mpb = new MaterialPropertyBlock();
             Mpb.SetColor("_Color", Colors.DarkBrown);
+
+            amountText = GetComponentInChildren<TextMesh>();
+            
+            if (toolPrefab == null)
+                amountText.text = "";
         }
 
         private void Start()
@@ -66,12 +75,29 @@ namespace Valve.VR.InteractionSystem
             }
         }
 
+        public void ToolDeleted() 
+        {
+            currentTools -= 1;
+            updateAmountText();
+        }
+
+        private void updateAmountText(){
+            amountText.text = string.Format("{0}/{1}", (maxTools-currentTools), maxTools);
+        }
+
         // STEAM VR FUNCTIONS
 
         public void SpawnAndAttach(Hand hand)
         {
-            GameObject prefabObject = Instantiate(toolPrefab);
-            hand.AttachObject(prefabObject, GrabTypes.Pinch);
+            if (currentTools < maxTools){
+                GameObject prefabObject = Instantiate(toolPrefab);
+                hand.AttachObject(prefabObject, GrabTypes.Pinch);
+
+                prefabObject.GetComponent<SpawnAmount>().spawner = (this);
+
+                currentTools += 1;
+                updateAmountText();
+            }
         }
 
         // This is like the update function. It is polled whenever a steamVR "hand" hovers over it.
