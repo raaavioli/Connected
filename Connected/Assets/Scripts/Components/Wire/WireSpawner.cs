@@ -15,15 +15,19 @@ public class WireSpawner : MonoBehaviour
     private GameObject wirePrefab;
     [SerializeField]
     private Player player;
+    [SerializeField]
+    private AudioClip[] sounds;
 
     private bool leftHandPressed;
     private bool rightHandPressed;
+    private AudioSource audioSource;
 
     void Start()
     {
         LeftHandPressed.AddOnAxisListener(LeftTriggerSqueeze, SteamVR_Input_Sources.LeftHand);
 
         RightHandPressed.AddOnAxisListener(RightTriggerSqueeze, SteamVR_Input_Sources.RightHand);
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -61,5 +65,11 @@ public class WireSpawner : MonoBehaviour
     public void RightTriggerSqueeze(SteamVR_Action_Single fromAction, SteamVR_Input_Sources fromSource, float newAxis, float newDelta)
     {
         rightHandPressed = newAxis > 0.999f;
+    }
+
+    private void PlaySound()
+    {
+        audioSource.clip = sounds[UnityEngine.Random.Range(0, sounds.Length)];
+        audioSource.Play();
     }
 }
