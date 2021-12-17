@@ -22,6 +22,9 @@ public class WireSpawner : MonoBehaviour
     private bool rightHandPressed;
     private AudioSource audioSource;
 
+    private int maxWires = 15;
+    public int currentWires = 0;
+
     void Start()
     {
         LeftHandPressed.AddOnAxisListener(LeftTriggerSqueeze, SteamVR_Input_Sources.LeftHand);
@@ -44,9 +47,12 @@ public class WireSpawner : MonoBehaviour
         bool leftHandFree = player.leftHand.currentAttachedObject == null;
         bool rightHandFree = player.rightHand.currentAttachedObject == null;
 
-        if (leftHandFree && rightHandFree && leftHandPressed && rightHandPressed)
+        if (leftHandFree && rightHandFree && leftHandPressed && rightHandPressed && currentWires < maxWires)
         {
             GameObject wire = Instantiate(wirePrefab);
+
+            wire.GetComponent<Wire>().spawner = this;
+
             GameObject startConnector = wire.transform.GetChild(0).gameObject;
             GameObject endConnector = wire.transform.GetChild(1).gameObject;
 
@@ -54,6 +60,8 @@ public class WireSpawner : MonoBehaviour
 
             player.leftHand.AttachObject(startConnector, GrabTypes.Pinch, flags, wire.transform);
             player.rightHand.AttachObject(endConnector, GrabTypes.Pinch, flags, wire.transform);
+
+            currentWires += 1;
         }
     }
 
