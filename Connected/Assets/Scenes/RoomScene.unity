@@ -915,6 +915,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b9aa2a8ba397d4e4db810ba15835b0f3, type: 3}
   - {fileID: 8300000, guid: 1c28453fd3e8a354aa82eb511dea4487, type: 3}
   audioSource: {fileID: 1569651593}
+  score: 1
 --- !u!82 &1569651593
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1129,6 +1130,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 09190a09232745c4e9fbeb573dc62f93, type: 3}
   - {fileID: 8300000, guid: 7c35ef5d2e3f13148848ee81571fe7f2, type: 3}
   audioSource: {fileID: 1065533799}
+  score: 1
 --- !u!65 &1864947206
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1471,6 +1473,63 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.02, y: 0.0038353915, z: 0.0011674964}
   m_Center: {x: -0.007409055, y: 0.0054442217, z: 0.023507804}
+--- !u!1001 &6570150938761249778
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6570150938729212005, guid: 845328fc5575409419c90dc1b9c8221d, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570150938729212005, guid: 845328fc5575409419c90dc1b9c8221d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570150938729212005, guid: 845328fc5575409419c90dc1b9c8221d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570150938729212005, guid: 845328fc5575409419c90dc1b9c8221d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570150938729212005, guid: 845328fc5575409419c90dc1b9c8221d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570150938729212005, guid: 845328fc5575409419c90dc1b9c8221d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570150938729212005, guid: 845328fc5575409419c90dc1b9c8221d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570150938729212005, guid: 845328fc5575409419c90dc1b9c8221d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570150938729212005, guid: 845328fc5575409419c90dc1b9c8221d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570150938729212005, guid: 845328fc5575409419c90dc1b9c8221d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570150938729212005, guid: 845328fc5575409419c90dc1b9c8221d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570150938729212007, guid: 845328fc5575409419c90dc1b9c8221d, type: 3}
+      propertyPath: m_Name
+      value: SceneChanger
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 845328fc5575409419c90dc1b9c8221d, type: 3}
 --- !u!1001 &8222216352453697862
 PrefabInstance:
   m_ObjectHideFlags: 0

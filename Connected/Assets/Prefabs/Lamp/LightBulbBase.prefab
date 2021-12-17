@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 6954210568732001657}
   m_Layer: 0
   m_Name: LightBulbBase
-  m_TagString: Untagged
+  m_TagString: BasePlate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

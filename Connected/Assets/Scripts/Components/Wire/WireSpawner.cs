@@ -24,6 +24,7 @@ public class WireSpawner : MonoBehaviour
 
     private int maxWires = 15;
     public int currentWires = 0;
+    private bool justSpawned = false;
 
     void Start()
     {
@@ -47,8 +48,9 @@ public class WireSpawner : MonoBehaviour
         bool leftHandFree = player.leftHand.currentAttachedObject == null;
         bool rightHandFree = player.rightHand.currentAttachedObject == null;
 
-        if (leftHandFree && rightHandFree && leftHandPressed && rightHandPressed && currentWires < maxWires)
+        if (leftHandFree && rightHandFree && leftHandPressed && rightHandPressed && currentWires < maxWires && !justSpawned)
         {
+            justSpawned = true;
             GameObject wire = Instantiate(wirePrefab);
 
             wire.GetComponent<Wire>().spawner = this;
@@ -63,6 +65,10 @@ public class WireSpawner : MonoBehaviour
 
             currentWires += 1;
         }
+
+        if (!(leftHandPressed && rightHandPressed) && justSpawned) {
+            justSpawned = false;
+		}
     }
 
     public void LeftTriggerSqueeze(SteamVR_Action_Single fromAction, SteamVR_Input_Sources fromSource, float newAxis, float newDelta)

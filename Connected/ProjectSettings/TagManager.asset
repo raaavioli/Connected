@@ -8,6 +8,7 @@ TagManager:
   - FxTemporaire
   - Connector
   - Slot
+  - BasePlate
   layers:
   - Default
   - TransparentFX

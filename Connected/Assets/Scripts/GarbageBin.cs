@@ -8,11 +8,17 @@ public class GarbageBin : MonoBehaviour
     AudioClip[] destroySounds;
     [SerializeField]
     private AudioSource audioSource;
+    [SerializeField]
+    private int score = 1;
 
     private void OnTriggerEnter(Collider collider)
     {
-        Destroy(collider.gameObject);
-        PlaySound();
+        if (!collider.CompareTag("Slot")) {
+            Destroy(collider.gameObject);
+            PlaySound();
+            ScoreManager.AddScore(score * (collider.gameObject.name.Contains("Radio") ? 2 : 1));
+        }
+        
     }
 
     private void PlaySound() {
