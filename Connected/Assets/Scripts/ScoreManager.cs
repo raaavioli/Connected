@@ -21,10 +21,6 @@ public class ScoreManager : MonoBehaviour {
 		instance.UpdateScore();
 	}
 
-	private void Update() {
-		RenderSettings.skybox.SetFloat("_Rotation", Time.time * 0.4f);
-	}
-
 	public static void AddScore(int score) {
 		if (instance != null) {
 			instance.score += score;
