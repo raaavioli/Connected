@@ -227,8 +227,15 @@ MonoBehaviour:
   volume: 10
   channelSounds:
   - {fileID: 8300000, guid: 7895ec802ffb13c46929dc4e02d2af05, type: 3}
-  - {fileID: 8300000, guid: 94a803fcb68675f4d87c11f64df6fdc0, type: 3}
-  - {fileID: 8300000, guid: b560e760451eb924599450bf209cf2d4, type: 3}
+  - {fileID: 8300000, guid: 36fcca94f08ddea42ab56be132667e2f, type: 3}
+  - {fileID: 8300000, guid: cf871462e0ea8fb43ac0375e37d064b2, type: 3}
+  - {fileID: 8300000, guid: 1efe323c92e4a5f45ad06798b07e5871, type: 3}
+  - {fileID: 8300000, guid: bec514743fc44a34b87058f5b243d4ff, type: 3}
+  - {fileID: 8300000, guid: eecbd1afe0e360d4db1e516fbb07295f, type: 3}
+  - {fileID: 8300000, guid: 53f1863b56edd5140aa9801b675dd6e5, type: 3}
+  - {fileID: 8300000, guid: a06f2a242ad00da46bc530bfd11a1a38, type: 3}
+  - {fileID: 8300000, guid: dc3d09d799bce2a4aacc1e44f4b59834, type: 3}
+  - {fileID: 8300000, guid: 5a4d960b3e6f88a4998a48b3039eb1b7, type: 3}
   channelSlider: {fileID: 6778593972979108105}
   channelWheel: {fileID: 3473629009050146808}
   volumeWheel: {fileID: 7876316776998897756}
@@ -974,7 +981,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   forceStart: 1
-  startAngle: 350
+  startAngle: 95
   rotateGameObject: 1
   debugPath: 0
   dbgPathLimit: 50
@@ -1125,7 +1132,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   forceStart: 1
-  startAngle: 350
+  startAngle: 120
   rotateGameObject: 1
   debugPath: 0
   dbgPathLimit: 50

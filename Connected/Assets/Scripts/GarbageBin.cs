@@ -6,11 +6,8 @@ public class GarbageBin : MonoBehaviour
 {
     [SerializeField]
     AudioClip[] destroySounds;
-
+    [SerializeField]
     private AudioSource audioSource;
-    void Awake() {
-		audioSource = GetComponent<AudioSource>();
-    }
 
     private void OnTriggerEnter(Collider collider)
     {
