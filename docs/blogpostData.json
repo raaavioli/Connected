@@ -47,9 +47,39 @@ blogData =
         text: "A radio was created to allow the player to interactively play music in the environment. The player is able to connect the radio into a circuit with a battery, select track/radio channel and change volume; like you would expect from a real radio!</br></br>The player can interactively change the volume, sound and plug in/out wires onto/from the device to enable/disable it. The main purpose of having a radio is to give the player some options for what audio to play, and also to serve as an easter egg, as you would not expect to be able to interactively change music in most games.</br></br>The radio may look old, but it works exceptionally well for its age!"
       },
       {
-        title: "",
-        images: [""],
-        text: ""
+        title: "Item spawners added",
+        images: ["images/spawners.gif"],
+        text: "At first, there was an idea to use a built in object in the SteamVR library that allows us to hold items, however, this object did not work as a spawner that could spawn multiple objects. Therefore, after some painful debugging in vain, i decided to create my own spawner. This new spawner is given an object that is placed in the hand of the user when they interact with it. To do this, we simply check of the user is hovering over the spawner and holding down the trigger. Then, there is a built-in function in the SteamVR library that can place and object directly into the hand of the player."
+      },
+      {
+        title: "Workshop room created",
+        images: ["images/room.gif"],
+        text: "While developing the components and interactions, it was useful to use a default scene with just a plane that had teleportation enabled where we could place objects for testing. However, we were sure at an early point that we would like a smaller play area inside a room that looked like it was inside a school. The room should be small enough to have no need for teleportation, since teleportation is an additional interaction that is not essential for the experience. Some iterations were required in order to get the room small enough to let the player reach everything, but large enough to fit all the objects. The final room can be seen in the gif, complete with a trashcan, workbench, door, baseboard, lamp, and window with a cityscape outside. Testing has showed that the room is of an appropriate size for the interaction, while not feeling cramped."
+      },
+      {
+        title: "Decorations for the room scene added",
+        images: ["images/decorations.png"],
+        text: "Even though we have tools that players can use to make a circuit and even play a radio, there is some empty space in the scene, especially when it comes to the wooden workbench. Therefore we have added some tools - a screwdriver and a pair of pliers - that add to the atmosphere and may give the environment more of a “workshop” feel. These models are therefore used as decorations on top of the wooden workbench, giving the impression that they were left there by someone who was tinkering in the room. While they do not add any functionality to the project, small details can sometimes improve the overall feeling we are going for."
+      },
+      {
+        title: "Sound effects added",
+        images: ["images/noimage.png"],
+        text: "Aside from the radio music added earlier, we needed more sound interaction. Seeing as the project has shaped up pretty well to a compact and well-limited product, and there's some time over, tackling sound design <em>sounded</em> (hehe) good. So now there is ambient sound in the workshop, resembling the quiet buzz in an otherwise quiet room, with sound leeching in from an industrial building. All components have realistic sound effects as a feedback mechanism, some of which were found on free and public sources online, while others needed to be recorded by me at home using <em>a lot </em> of creativity. Unfortunately, some component additions haven't made it through to be added to the project, so the sound effects for those ended up unused. :( Due to the non-visual nature of sound, there is no real image to be shown, but <a href='https://drive.google.com/drive/folders/1i7yW2C6z8S5nBjgBNdHj3zjb0BPZpqmi?usp=sharing'>here</a> are all the sound effects I produced, along with proper names. Feel free to use them yourself, if you wish. Just contact me first. :)"
+      },
+      {
+        title: "Item limits implemented",
+        images: ["images/limiters.gif"],
+        text: "A potential problem with our game is performance, therefore, it is a good idea to limit how many objects can be in the game at once. This would also serve as a gameplay element, as with fever components, the user would have to think about how to build something with the tools availiable. To solve this, i added a counter to the item spawners and increase this whenever a new component is taken from that spawner. Then i also added some code to the objects themselves that runs whenever the object is thrown into the trash. This code tells the spawner that there is one less component in the game, so that another can be spawned. I also added similar code to the script for spawning wires in the hands, and then i also added a text element to the spawner so that the player can see how many more can be spawned"
+      },
+      {
+        title: "Throwing minigame added",
+        images: ["images/bestscene.gif"],
+        text: "As a final touch to the experience, someone suggested we should add a small throwing minigame where you score points for throwing components into bins. Throwing components had already been known as one of the most fun things about the experience, so it feels natural that it was made into an easter egg scene with a minigame about it. We also rotated the window open and added a feature where components are destroyed when thrown out, and a sound of a person getting hit by it is played."
+      },
+      {
+        title: "The project is finished.",
+        images: ["images/logo.png"],
+        text: "The short month of development has passed, and even though we went head on to this second project after being exhausted by the initial one, our hard work has managed to output something we're proud to have created. We've created a proof of concept, that you <em>can</em> in fact created a virtual learning environment, and more specifically for circuitry. While the limited time allowed us to only implement a few features, it is obvious to us that it could be expanded to be more conclusive to today's state of circuitry, given enough time of course. Having observed uninvolved users enjoy our project, provides great satisfaction to our efforts. Another fun learning and development experience has been had, and to anyone who has involved themselves, thank you. Until the next time!"
       }
    ]
 }
