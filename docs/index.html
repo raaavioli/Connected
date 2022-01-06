@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>AGI - Connected</title>
+<title>Connected</title>
 <meta name="keywords" content="Web Tech Template, CSS, HTML" />
 <meta name="description" content="Web Tech Template is a free CSS website provided by templatemo.com" />
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -42,7 +42,18 @@
 
   <div class="content_box">
             <h1>The Project</h1>
-            <p>Text about the project.
+            <p>Our project is a VR simulator sandbox of interacting with circuitry, designed to remove the both the hazard and resource obstacles of the physical world. The primary motivation was to focus on children in schools as the intended audience, because we know from both fact and experience that teaching children circuitry in school is prohibitively both expensive and dangerous. Why we went with VR headset and controllers is because they are very intuitive to use and they promote exploration. A few simple instructions is all a new user needs to get started on his/her own. The project is designed using Unity and SteamVR, because those softwares were readily available to us, both in terms of access and prior experiences.</br></br>We took large inspiration from <a href="http://www.cburch.com/logisim/">Logisim, developed by Carl Burch</a>. Aside from needing to know what each component does and how they can be interacted with, the programme is <i>very</i> easy and intuitive to get into. We also realised from his work that projecting 3D structures to 2D spaces introduces the risk of cluttering, so that is something we wanted to improve upon.</br>We also took large inspiration from pretty much any VR game, but we had <a href="https://keeptalkinggame.com/">Keep Talking and Nobody Explodes, developed by Steel Crate Games</a> particularly in mind. The reason being that getting into most VR games goes almost immediately, which is very impressive that this particular game manages for you to do, despite introducing a lot of things for you to learn.</br></br>
+              What we got time to do was supporting serial circuits, include battery power sources, lighting light bulbs with varying intensity depending on the input current, a radio to be powered by the batteries, and of course the wires to connect everything together. Had we had more time, we would at least have introduced support for parallel circuitry, added switches and splitters.</br></br>
+              You can grab each of the interactable objects with the VR controllers, represented as gloved hands in the virtual space. A rigid 'snapping' functionality for the wires compensates for the lack of dexterity when trying to insert their ends into the components. To provide feedback to the user, we thought that audio is very underused in projects like these, so we decided on delivering through a complete system of sound effects.</br></br>
+              The challenges we aimed to overcome during the project includes, but are not limited to:</br>
+               • Coordinating and completing a large and ambitious project like this in a very short time span of little more than a month.</br>
+               • Constructing a faithful simulation of the way circuitry and physics work.</br>
+               • Making an intuitive and easy-to-get-into experience for any user, regardless of previous experiences, with the focus on children in 7th-9th grade (in Sweden).</br></br>
+              As the project went on, we encountered a few obstacles. Here are the main ones:</br>
+              • Circuitry can in its most general sense be representing a topological graph, with nodes and connections between them stretching without any specific constraints. Most graph-related problems in computer science are proven "NP hard", which means that solving them because prohibitively difficult as the problem size increases. It turns out that it applies for our simulation as well, which is why we only got time to implement serial circuitery, and not parallel as well.</br>
+              • The lack of tactile dexterity in a task that requires a fair bit of it normally made connecting the wires to the components very frustrating and difficult. We solved this by introducing 'snapping', which does the attaching action for you if you get the parts close enough.</br>
+              • Most official documentation of doing VR in Unity is deprecated, with no replacement to be found. This made learning experience more trial-and-error than it should have been.</br></br>
+              Anyway, we are happy with how the project turned out, despite the content that had to be cut, because we at least managed to prove the concept that it is possible to interact with circuitry through VR, without a steep learning curve of interacting with VR environments; you still need to actually learn the physics of electricity, etc. We have also gotten to learn to work with VR, which was very intimidating at first glance, as well as go back to elementary school physics a bit which is something most of us has forgotten at this point.
             </p>
 	</div>
   <div class="content_box">
